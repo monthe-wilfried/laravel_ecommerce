@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <!-- content wrpper -->
 <div class="content_wrapper">
@@ -13,7 +14,7 @@
                              <span><i class="fa fa-code"></i></span>
                               <h2 class="timer count-number" data-to="300" data-speed="1500"></h2>
                         </div>
-                     
+
                        <p class="count-text ">SomeText GoesHere</p>
                     </div>
                 </div>
@@ -33,7 +34,7 @@
                              <h2 class="timer count-number" data-to="11900" data-speed="1500"></h2>
                         </div>
                         <p class="count-text ">SomeText GoesHere</p>
-                          
+
                     </div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
@@ -161,7 +162,7 @@
                                 <canvas id="bar-canvas" ></canvas>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="panel">
@@ -174,10 +175,10 @@
                         <div class="panel_body">
                             <div id="piechart"></div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div>
-        </section>                   
+        </section>
     </div><!--/middle content wrapper-->
 </div><!--/ content wrapper -->
 @endsection

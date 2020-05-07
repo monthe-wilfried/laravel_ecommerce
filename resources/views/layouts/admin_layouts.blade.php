@@ -34,6 +34,12 @@
     <link href="{{ asset('public/backend/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('public/backend/lib/Ionicons/css/ionicons.css') }}" rel="stylesheet">
     <link href="{{ asset('public/backend/lib/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet">
+
+    <!-- Datatable css-->
+    <link href="{{ asset('public/backend/lib/highlightjs/github.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/backend/lib/datatables/jquery.dataTables.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/backend/lib/select2/css/select2.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('public/backend/lib/rickshaw/rickshaw.min.css') }}" rel="stylesheet">
 
     <!-- chart -->
@@ -41,6 +47,8 @@
 
     <!-- Starlight CSS -->
     <link rel="stylesheet" href="{{ asset('public/backend/css/starlight.css') }}">
+
+    @yield('styles')
 </head>
 
 <body>
@@ -63,12 +71,12 @@
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
                         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
-                        <span class="menu-item-label">Categories</span>
+                        <span class="menu-item-label">Category</span>
                         <i class="menu-item-arrow fa fa-angle-down"></i>
                     </div><!-- menu-item -->
                 </a><!-- sl-menu-link -->
                 <ul class="sl-menu-sub nav flex-column">
-                    <li class="nav-item"><a href="chart-morris.html" class="nav-link">Categories</a></li>
+                    <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Categories</a></li>
                     <li class="nav-item"><a href="chart-flot.html" class="nav-link">Sub Categories</a></li>
                     <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Brands</a></li>
                 </ul>
@@ -350,11 +358,44 @@
     @yield('admin_content')
 
 
+
     <script src="{{ asset('public/backend/lib/jquery/jquery.js') }}"></script>
     <script src="{{ asset('public/backend/lib/popper.js/popper.js') }}"></script>
     <script src="{{ asset('public/backend/lib/bootstrap/bootstrap.js') }}"></script>
     <script src="{{ asset('public/backend/lib/jquery-ui/jquery-ui.js') }}"></script>
     <script src="{{ asset('public/backend/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js') }}"></script>
+
+    <script src="{{ asset('public/backend/lib/highlightjs/highlight.pack.js') }}"></script>
+    <script src="{{ asset('public/backend/lib/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('public/backend/lib/datatables-responsive/dataTables.responsive.js') }}"></script>
+    <script src="{{ asset('public/backend/lib/select2/js/select2.min.js') }}"></script>
+
+    <script>
+        $(function(){
+            'use strict';
+
+            $('#datatable1').DataTable({
+                responsive: true,
+                language: {
+                    searchPlaceholder: 'Search...',
+                    sSearch: '',
+                    lengthMenu: '_MENU_ items/page',
+                }
+            });
+
+            $('#datatable2').DataTable({
+                bLengthChange: false,
+                searching: false,
+                responsive: true
+            });
+
+            // Select2
+            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+
+        });
+    </script>
+
+
     <script src="{{ asset('public/backend/lib/jquery.sparkline.bower/jquery.sparkline.min.js') }}"></script>
     <script src="{{ asset('public/backend/lib/jquery.sparkline.bower/jquery.sparkline.min.js') }}../lib/d3/d3.js"></script>
     <script src="{{ asset('public/backend/lib/rickshaw/rickshaw.min.js') }}"></script>
@@ -374,22 +415,23 @@
 
     <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 
+    @yield('scripts')
 
     <script>
-            @if(Session::has('messege'))
+            @if(Session::has('message'))
         var type="{{Session::get('alert-type','info')}}"
         switch(type){
             case 'info':
-                toastr.info("{{ Session::get('messege') }}");
+                toastr.info("{{ Session::get('message') }}");
                 break;
             case 'success':
-                toastr.success("{{ Session::get('messege') }}");
+                toastr.success("{{ Session::get('message') }}");
                 break;
             case 'warning':
-                toastr.warning("{{ Session::get('messege') }}");
+                toastr.warning("{{ Session::get('message') }}");
                 break;
             case 'error':
-                toastr.error("{{ Session::get('messege') }}");
+                toastr.error("{{ Session::get('message') }}");
                 break;
         }
         @endif
@@ -401,7 +443,7 @@
             var link = $(this).attr("href");
             swal({
                 title: "Do you Want to delete?",
-                text: "Once Delete, This will be Permanently Deleted!",
+                text: "Once Deleted, This will be Permanently Deleted!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -410,7 +452,7 @@
                     if (willDelete) {
                         window.location.href = link;
                     } else {
-                        swal("Safe Data!");
+                        swal("Data not deleted!");
                     }
                 });
         });
