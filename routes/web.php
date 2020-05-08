@@ -1,6 +1,8 @@
 <?php
 
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return view('pages.index');});
 //auth & user
@@ -31,4 +33,11 @@ Route::post('admin/category/store', 'Admin\Category\CategoryController@store')->
 Route::get('admin/category/delete/{id}', 'Admin\Category\CategoryController@delete')->name('category.delete');
 Route::get('admin/category/edit/{id}', 'Admin\Category\CategoryController@edit')->name('category.edit');
 Route::put('admin/category/update/{id}', 'Admin\Category\CategoryController@update')->name('category.update');
+
+// Admin section -Brands
+Route::get('admin/brands', 'Admin\Category\BrandController@index')->name('brands.index');
+Route::post('admin/brands/store', 'Admin\Category\BrandController@store')->name('brand.store');
+Route::get('admin/brands/delete/{id}', 'Admin\Category\BrandController@delete')->name('brand.delete');
+Route::get('admin/brands/edit/{id}', 'Admin\Category\BrandController@edit')->name('brand.edit');
+Route::put('admin/brands/update/{id}', 'Admin\Category\BrandController@update')->name('brand.update');
 

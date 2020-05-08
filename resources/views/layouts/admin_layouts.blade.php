@@ -78,7 +78,7 @@
                 <ul class="sl-menu-sub nav flex-column">
                     <li class="nav-item"><a href="{{ route('categories.index') }}" class="nav-link">Categories</a></li>
                     <li class="nav-item"><a href="chart-flot.html" class="nav-link">Sub Categories</a></li>
-                    <li class="nav-item"><a href="chart-chartjs.html" class="nav-link">Brands</a></li>
+                    <li class="nav-item"><a href="{{ route('brands.index') }}" class="nav-link">Brands</a></li>
                 </ul>
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">

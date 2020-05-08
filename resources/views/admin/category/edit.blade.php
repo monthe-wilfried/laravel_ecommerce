@@ -15,7 +15,8 @@
             </div><!-- sl-page-title -->
 
             <div class="card pd-20 pd-sm-40">
-
+                <h6 class="card-body-title">Edit Category</h6>
+                <br>
                 <form method="post" action="{{ route('category.update', $category->id) }}">
                     @csrf
                     @method('put')

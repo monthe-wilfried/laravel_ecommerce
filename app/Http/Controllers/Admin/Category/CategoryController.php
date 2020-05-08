@@ -60,12 +60,24 @@ class CategoryController extends Controller
         ]);
         $category = Category::findOrFail($id);
         $input = $request->all();
-        $category->update($input);
-        $notification = array(
-            'message' => 'Category successfully updated.',
-            'alert-type' => 'success'
-        );
-        return redirect()->route('categories.index')->with($notification);
+        $update = $category->update($input);
+
+        if($update){
+            $notification = array(
+                'message' => 'Category successfully updated.',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('categories.index')->with($notification);
+        }
+        else{
+            $notification = array(
+                'message' => 'Nothing to update.',
+                'alert-type' => 'info'
+            );
+            return redirect()->route('categories.index')->with($notification);
+        }
+
+
     }
 
     // Delete a category record
