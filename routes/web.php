@@ -42,9 +42,34 @@ Route::get('admin/brands/edit/{id}', 'Admin\Category\BrandController@edit')->nam
 Route::put('admin/brands/update/{id}', 'Admin\Category\BrandController@update')->name('brand.update');
 
 
-// Admin section -Brands
+// Admin section - Sub Categories
 Route::get('admin/sub/category', 'Admin\Category\SubCategoryController@index')->name('sub.categories.index');
 Route::post('admin/sub/category/store', 'Admin\Category\SubCategoryController@store')->name('sub.category.store');
 Route::get('admin/sub/category/delete{id}', 'Admin\Category\SubCategoryController@delete')->name('sub.category.delete');
 Route::get('admin/sub/category/edit/{id}', 'Admin\Category\SubCategoryController@edit')->name('sub.category.edit');
 Route::put('admin/sub/category/update/{id}', 'Admin\Category\SubCategoryController@update')->name('sub.category.update');
+
+// Admin section - Coupons
+Route::get('admin/coupons', 'Admin\Category\CouponController@index')->name('admin.coupons.index');
+Route::post('admin/coupon/store', 'Admin\Category\CouponController@store')->name('admin.coupon.store');
+Route::get('admin/coupon/delete/{id}', 'Admin\Category\CouponController@delete')->name('admin.coupon.delete');
+Route::get('admin/coupon/edit/{id}', 'Admin\Category\CouponController@edit')->name('admin.coupon.edit');
+Route::put('admin/coupon/update/{id}', 'Admin\Category\CouponController@update')->name('admin.coupon.update');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

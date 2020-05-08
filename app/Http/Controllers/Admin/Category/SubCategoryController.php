@@ -25,7 +25,7 @@ class SubCategoryController extends Controller
     // Store sub category record
     public function store(Request $request){
         $this->validate($request, [
-            'name' => 'required|unique:sub_categories|max:255',
+            'name' => 'required|max:255',
             'category_id' => 'required'
         ]);
 
