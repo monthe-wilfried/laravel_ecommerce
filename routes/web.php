@@ -57,7 +57,23 @@ Route::get('admin/coupon/edit/{id}', 'Admin\Category\CouponController@edit')->na
 Route::put('admin/coupon/update/{id}', 'Admin\Category\CouponController@update')->name('admin.coupon.update');
 
 
+// Admin section - Newsletters
+Route::get('admin/newsletters', 'Admin\Category\NewsletterController@index')->name('admin.newsletters.index');
+Route::get('admin/newsletter/delete/{id}', 'Admin\Category\NewsletterController@delete')->name('admin.newsletter.delete');
 
+
+// Admin section - Products
+Route::get('admin/products', 'Admin\ProductController@index')->name('admin.products.index');
+Route::get('admin/product/create', 'Admin\ProductController@create')->name('admin.product.create');
+Route::post('admin/product/store', 'Admin\ProductController@store')->name('admin.product.store');
+
+// Show Sub Category with Ajax
+Route::get('get/subcategory/{category_id}', 'Admin\ProductController@getSubCategory');
+
+
+
+// Frontend - Newsletter
+Route::post('admin/newsletter/store', 'FrontController@storeNewsletter')->name('newsletter.store');
 
 
 

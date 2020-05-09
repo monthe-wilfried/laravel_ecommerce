@@ -5,7 +5,7 @@
     <div class="sl-mainpanel">
 
         <nav class="breadcrumb sl-breadcrumb">
-            <a class="breadcrumb-item" href="{{ route('categories.index') }}">Coupon</a>
+            <a class="breadcrumb-item" href="{{ route('admin.coupons.index') }}">Coupon</a>
             <span class="breadcrumb-item active">Coupons</span>
         </nav>
 

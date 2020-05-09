@@ -17,6 +17,9 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/responsive.css') }}">
 
+    <!-- chart -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
 </head>
 
 <body>
@@ -245,6 +248,7 @@
     </div>
 </div>
 
+
 <script src="{{ asset('public/frontend/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('public/frontend/styles/bootstrap4/popper.js') }}"></script>
 <script src="{{ asset('public/frontend/styles/bootstrap4/bootstrap.min.js') }}"></script>
@@ -257,6 +261,33 @@
 <script src="{{ asset('public/frontend/plugins/slick-1.8.0/slick.js') }}"></script>
 <script src="{{ asset('public/frontend/plugins/easing/easing.js') }}"></script>
 <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+<script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+
+
+<script>
+        @if(Session::has('message'))
+    var type="{{Session::get('alert-type','info')}}"
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }
+    @endif
+</script>
+
 </body>
 
 </html>
