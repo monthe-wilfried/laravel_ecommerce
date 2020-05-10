@@ -13,10 +13,12 @@
         <div class="sl-pagebody">
 
             <div class="card pd-20 pd-sm-40">
-                <h6 class="card-body-title">Add New Product</h6>
+                <h6 class="card-body-title">Add New Product
+                    <a href="{{ route('admin.products.index') }}" class="btn btn-sm btn-success pull-right">All Products</a>
+                </h6>
                 <p class="mg-b-20 mg-sm-b-30">New Product Form</p>
 
-                <form method="post" action="" enctype="multipart/form-data">
+                <form method="post" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-layout">
@@ -24,25 +26,41 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Name: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="product_name" placeholder="Enter product name">
+                                    <input class="form-control" type="text" name="product_name" placeholder="Enter product name" value="{{ old('product_name') }}">
+                                    @if($errors->has('product_name'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('product_name') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Code: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="text" name="product_code" placeholder="Enter product code">
+                                    <input class="form-control" type="text" name="product_code" placeholder="Enter product code"  value="{{ old('product_code') }}">
+                                    @if($errors->has('product_code'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('product_code') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Quantity: <span class="tx-danger">*</span></label>
-                                    <input class="form-control" type="number" name="product_quantity" placeholder="Product quantity">
+                                    <input class="form-control" type="number" name="product_quantity" placeholder="Product quantity" value="{{ old('product_quantity') }}">
+                                    @if($errors->has('product_quantity'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('product_quantity') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
-                                    <select class="form-control select2" name="category_id">
+                                    <select class="form-control select2" name="category_id" data-placeholder="Choose category">
+                                        <option value="">Choose Category...</option>
                                         <option label="Choose Category"></option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -52,7 +70,7 @@
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Sub Category: <span class="tx-danger">*</span></label>
+                                    <label class="form-control-label">Sub Category: </label>
                                     <select class="form-control select2" name="sub_category_id">
 
                                     </select>
@@ -60,8 +78,9 @@
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group mg-b-10-force">
-                                    <label class="form-control-label">Brand: <span class="tx-danger">*</span></label>
-                                    <select class="form-control select2" name="brand_id" data-placeholder="Choose sub category">
+                                    <label class="form-control-label">Brand: </label>
+                                    <select class="form-control select2" name="brand_id" data-placeholder="Choose brand">
+                                        <option value="">Choose Brand...</option>
                                         @foreach($brands as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->name }}</option>
                                         @endforeach
@@ -71,31 +90,51 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Size: <span class="tx-danger">*</span></label>
-                                    <input id="size" type="text" name="product_size" data-role="tagsinput" class="form-control">
+                                    <input id="size" type="text" name="product_size" data-role="tagsinput" class="form-control" value="{{ old('product_size') }}">
+                                    @if($errors->has('product_size'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('product_size') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Color: <span class="tx-danger">*</span></label>
-                                    <input id="color" type="text" name="product_color" data-role="tagsinput" class="form-control">
+                                    <input id="color" type="text" name="product_color" data-role="tagsinput" class="form-control" value="{{ old('product_color') }}">
+                                    @if($errors->has('product_color'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('product_color') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="form-control-label">Selling Price: <span class="tx-danger">*</span></label>
-                                    <input type="number" name="selling_price" placeholder="Enter Selling Price" class="form-control">
+                                    <input type="number" name="selling_price" placeholder="Enter Selling Price" class="form-control" value="{{ old('selling_price') }}">
+                                    @if($errors->has('selling_price'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('selling_price') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Details: <span class="tx-danger">*</span></label>
-                                    <input id="summernote" name="selling_price" class="form-control">
+                                    <textarea id="summernote" name="product_details" class="form-control">{{ old('product_details') }}</textarea>
+                                    @if($errors->has('product_details'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('product_details') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label class="form-control-label">Video Link:</label>
-                                    <input name="video_link" class="form-control" placeholder="Video Link">
+                                    <input name="video_link" class="form-control" placeholder="Video Link" value="{{ old('video_link') }}">
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
@@ -106,6 +145,11 @@
                                         <span class="custom-file-control"></span>
                                     </label>
                                     <img src="" id="one">
+                                    @if($errors->has('image_one'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('image_one') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
@@ -116,6 +160,11 @@
                                         <span class="custom-file-control"></span>
                                     </label>
                                     <img src="" id="two">
+                                    @if($errors->has('image_two'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('image_two') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                             <div class="col-lg-4">
@@ -126,6 +175,11 @@
                                         <span class="custom-file-control"></span>
                                     </label>
                                     <img src="" id="three">
+                                    @if($errors->has('image_three'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('image_three') }}</strong>
+                                        </div>
+                                    @endif
                                 </div>
                             </div><!-- col-4 -->
                         </div><!-- row -->
