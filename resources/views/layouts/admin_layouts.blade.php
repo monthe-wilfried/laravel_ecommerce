@@ -64,7 +64,7 @@
     @else
 
         <!-- ########## START: LEFT PANEL ########## -->
-        <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> Ecommerce</a></div>
+        <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> EasyCommerce</a></div>
         <div class="sl-sideleft">
 
             <div class="sl-sideleft-menu">

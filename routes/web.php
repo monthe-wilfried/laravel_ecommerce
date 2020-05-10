@@ -66,6 +66,13 @@ Route::get('admin/newsletter/delete/{id}', 'Admin\Category\NewsletterController@
 Route::get('admin/products', 'Admin\ProductController@index')->name('admin.products.index');
 Route::get('admin/product/create', 'Admin\ProductController@create')->name('admin.product.create');
 Route::post('admin/product/store', 'Admin\ProductController@store')->name('admin.product.store');
+Route::get('admin/product/active/{status_id}', 'Admin\ProductController@active')->name('admin.product.active');
+Route::get('admin/product/inactive/{status_id}', 'Admin\ProductController@inactive')->name('admin.product.inactive');
+Route::get('admin/product/delete/{id}', 'Admin\ProductController@delete')->name('admin.product.delete');
+Route::get('admin/product/show/{id}', 'Admin\ProductController@show')->name('admin.product.show');
+Route::get('admin/product/edit/{id}', 'Admin\ProductController@edit')->name('admin.product.edit');
+Route::put('admin/product/update/without-photo/{id}', 'Admin\ProductController@updateWithoutPhoto')->name('admin.product.update.without.photo');
+Route::put('admin/product/update/photo/{id}', 'Admin\ProductController@updatePhoto')->name('admin.product.update.photo');
 
 // Show Sub Category with Ajax
 Route::get('get/subcategory/{category_id}', 'Admin\ProductController@getSubCategory');
@@ -73,7 +80,8 @@ Route::get('get/subcategory/{category_id}', 'Admin\ProductController@getSubCateg
 
 
 // Frontend - Newsletter
-Route::post('admin/newsletter/store', 'FrontController@storeNewsletter')->name('newsletter.store');
+Route::post('newsletter/store', 'FrontController@storeNewsletter')->name('newsletter.store');
+
 
 
 

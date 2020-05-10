@@ -61,7 +61,6 @@
                                     <label class="form-control-label">Category: <span class="tx-danger">*</span></label>
                                     <select class="form-control select2" name="category_id" data-placeholder="Choose category">
                                         <option value="">Choose Category...</option>
-                                        <option label="Choose Category"></option>
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach

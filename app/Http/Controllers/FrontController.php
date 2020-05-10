@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Newsletter;
+use App\Product;
 use Illuminate\Http\Request;
 
 class FrontController extends Controller
@@ -22,4 +23,5 @@ class FrontController extends Controller
         );
         return redirect()->back()->with($notification);
     }
+
 }
