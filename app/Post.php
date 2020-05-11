@@ -8,7 +8,7 @@ class Post extends Model
 {
     //
     protected $fillable = [
-        'category_id',
+        'post_category_id',
         'title_en',
         'title_de',
         'details_en',

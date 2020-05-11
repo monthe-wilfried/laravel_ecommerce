@@ -18,9 +18,9 @@ class CreatePostsTable extends Migration
             $table->integer('post_category_id');
             $table->string('title_en');
             $table->string('title_de');
-            $table->string('image');
-            $table->string('details_en');
-            $table->string('details_de');
+            $table->string('image')->nullable();
+            $table->text('details_en');
+            $table->text('details_de');
             $table->timestamps();
         });
     }

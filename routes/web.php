@@ -85,6 +85,13 @@ Route::get('admin/blog/categories/edit/{id}', 'Admin\PostController@blogCategory
 Route::put('admin/blog/categories/update/{id}', 'Admin\PostController@blogCategoryUpdate')->name('admin.blog.categories.update');
 Route::get('admin/blog/categories/delete/{id}', 'Admin\PostController@blogCategoryDelete')->name('admin.blog.categories.delete');
 
+Route::get('admin/blog/posts/index', 'Admin\PostController@blogPostList')->name('admin.blog.posts.index');
+Route::get('admin/blog/post/create', 'Admin\PostController@blogPostCreate')->name('admin.blog.post.create');
+Route::post('admin/blog/post/store', 'Admin\PostController@blogPostStore')->name('admin.blog.post.store');
+Route::get('admin/blog/post/delete/{id}', 'Admin\PostController@blogPostDelete')->name('admin.blog.post.delete');
+Route::get('admin/blog/post/edit/{id}', 'Admin\PostController@blogPostEdit')->name('admin.blog.post.edit');
+Route::put('admin/blog/post/update/{id}', 'Admin\PostController@blogPostUpdate')->name('admin.blog.post.update');
+
 
 
 
