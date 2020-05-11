@@ -78,6 +78,15 @@ Route::put('admin/product/update/photo/{id}', 'Admin\ProductController@updatePho
 Route::get('get/subcategory/{category_id}', 'Admin\ProductController@getSubCategory');
 
 
+// Admin section - Blog
+Route::get('admin/blog/categories/list', 'Admin\PostController@blogCategoryList')->name('admin.blog.categories.index');
+Route::post('admin/blog/categories/store', 'Admin\PostController@blogCategoryStore')->name('admin.blog.categories.store');
+Route::get('admin/blog/categories/edit/{id}', 'Admin\PostController@blogCategoryEdit')->name('admin.blog.categories.edit');
+Route::put('admin/blog/categories/update/{id}', 'Admin\PostController@blogCategoryUpdate')->name('admin.blog.categories.update');
+Route::get('admin/blog/categories/delete/{id}', 'Admin\PostController@blogCategoryDelete')->name('admin.blog.categories.delete');
+
+
+
 
 // Frontend - Newsletter
 Route::post('newsletter/store', 'FrontController@storeNewsletter')->name('newsletter.store');
