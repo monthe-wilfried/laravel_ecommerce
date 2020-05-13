@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,6 +35,10 @@ class HomeController extends Controller
 
     public function updatePassword(Request $request)
     {
+        $this->validate($request, [
+            'oldpass' => 'required',
+            'password' => 'required',
+        ]);
       $password=Auth::user()->password;
       $oldpass=$request->oldpass;
       $newpass=$request->password;
@@ -45,20 +50,20 @@ class HomeController extends Controller
                       $user->save();
                       Auth::logout();
                       $notification=array(
-                        'messege'=>'Password Changed Successfully ! Now Login with Your New Password',
+                        'message'=>'Password Changed Successfully ! Now Login with Your New Password',
                         'alert-type'=>'success'
                          );
                        return Redirect()->route('login')->with($notification);
                  }else{
                      $notification=array(
-                        'messege'=>'New password and Confirm Password not matched!',
+                        'message'=>'New password and Confirm Password not matched!',
                         'alert-type'=>'error'
                          );
                        return Redirect()->back()->with($notification);
                  }
       }else{
         $notification=array(
-                'messege'=>'Old Password not matched!',
+                'message'=>'Old Password not matched!',
                 'alert-type'=>'error'
                  );
                return Redirect()->back()->with($notification);
@@ -71,10 +76,10 @@ class HomeController extends Controller
         // $logout= Auth::logout();
             Auth::logout();
             $notification=array(
-                'messege'=>'Successfully Logout',
+                'message'=>'Successfully Logout',
                 'alert-type'=>'success'
                  );
-             return Redirect()->route('login')->with($notification);
+             return redirect()->route('login')->with($notification);
 
 
     }

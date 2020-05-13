@@ -28,7 +28,7 @@
     <meta name="description" content="Premium Quality and Responsive UI for Dashboard.">
     <meta name="author" content="ThemePixels">
 
-    <title>Ecommerce Site Admin Panel</title>
+    <title>Trade</title>
 
     <!-- vendor css -->
     <link href="{{ asset('public/backend/lib/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -64,7 +64,7 @@
     @else
 
         <!-- ########## START: LEFT PANEL ########## -->
-        <div class="sl-logo"><a href=""><i class="icon ion-android-star-outline"></i> EasyCommerce</a></div>
+        <div class="sl-logo"><a href=""><i class="fa fa-shopping-basket fa-xs" aria-hidden="true"></i>Trade</a></div>
         <div class="sl-sideleft">
 
             <div class="sl-sideleft-menu">

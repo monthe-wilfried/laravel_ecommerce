@@ -1,5 +1,11 @@
-<!-- Main Navigation -->
+@php
 
+    $categories = \App\Category::all();
+
+@endphp
+
+
+<!-- Main Navigation -->
 <nav class="main_nav">
     <div class="container">
         <div class="row">
@@ -16,31 +22,16 @@
                         </div>
 
                         <ul class="cat_menu">
-                            <li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-                            <li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-                            <li class="hassubs">
-                                <a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-                                <ul>
-                                    <li class="hassubs">
-                                        <a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-                                        <ul>
-                                            <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                            <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                            <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                            <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                    <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-                            <li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-                            <li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-                            <li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-                            <li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-                            <li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+                            @foreach($categories as $category)
+                                <li class="hassubs">
+                                    <a href="#">{{ $category->name }}<i class="fas fa-chevron-right"></i></a>
+                                    <ul>
+                                        @foreach($category->sub_categories as $sub_category)
+                                            <li><a href="#">{{ $sub_category->name }}</a></li>
+                                        @endforeach
+                                    </ul>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
 
@@ -48,7 +39,7 @@
 
                     <div class="main_nav_menu ml-auto">
                         <ul class="standard_dropdown main_nav_dropdown">
-                            <li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
+                            <li><a href="{{ url('/') }}">Home<i class="fas fa-chevron-down"></i></a></li>
                             <li class="hassubs">
                                 <a href="#">Super Deals<i class="fas fa-chevron-down"></i></a>
                                 <ul>
@@ -149,7 +140,7 @@
                             </ul>
                         </li>
                         <li class="page_menu_item">
-                            <a href="#">Home<i class="fa fa-angle-down"></i></a>
+                            <a href="{{ url('/') }}">Home<i class="fa fa-angle-down"></i></a>
                         </li>
                         <li class="page_menu_item has-children">
                             <a href="#">Super Deals<i class="fa fa-angle-down"></i></a>
@@ -204,17 +195,29 @@
 </header>
 
 <!-- Banner -->
+@php
+    $product = \App\Product::where('main_slider', 1)->where('status', 1)->orderBy('id','asc')->first();
+@endphp
 
 <div class="banner">
     <div class="banner_background" style="background-image:url({{ asset('public/frontend/images/banner_background.jpg') }})"></div>
     <div class="container fill_height">
         <div class="row fill_height">
-            <div class="banner_product_image"><img src="{{ asset('public/frontend/images/banner_product.png') }}" alt=""></div>
+            <div class="banner_product_image"><img src="{{ asset($product->image_one) }}" style="height: 450px"></div>
             <div class="col-lg-5 offset-lg-4 fill_height">
                 <div class="banner_content">
-                    <h1 class="banner_text">new era of smartphones</h1>
-                    <div class="banner_price"><span>$530</span>$460</div>
-                    <div class="banner_product_name">Apple Iphone 6s</div>
+                    <h1 class="banner_text">{{ $product->product_name }}</h1>
+                    <div class="banner_price">
+
+                        @if($product->discount_price)
+                            <span>${{ $product->selling_price }}</span>
+                            ${{ $product->discount_price }}
+                        @else
+                            <h2>${{ $product->selling_price }}</h2>
+                        @endif
+
+                    </div>
+                    <div class="banner_product_name">{{ $product->brand->name }}</div>
                     <div class="button banner_button"><a href="#">Shop Now</a></div>
                 </div>
             </div>

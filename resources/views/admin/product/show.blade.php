@@ -172,6 +172,17 @@
                                 </label>
                             </div><!-- col-4 -->
 
+                            <div class="col-lg-4">
+                                <label>
+                                    @if($product->buyone_getone == 1)
+                                        <span class="badge badge-success">Active</span>
+                                    @else
+                                        <span class="badge badge-danger">Inactive</span>
+                                    @endif
+                                    <span>Buy One Get One</span>
+                                </label>
+                            </div><!-- col-4 -->
+
                         </div><!-- end row -->
 
                         <div class="formform-layout-footer">

@@ -77,7 +77,7 @@
                                         @foreach($categories as $category)
                                             <option value="{{ $category->id }}"
                                                 @if($category->id == $post->post_category_id)
-
+                                                    selected
                                                 @endif
                                             >{{ $category->category_name_en }}</option>
                                         @endforeach

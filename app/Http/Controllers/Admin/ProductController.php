@@ -116,6 +116,7 @@ class ProductController extends Controller
         $input['mid_slider'] = $request->mid_slider;
         $input['hot_new'] = $request->hot_new;
         $input['best_rated'] = $request->best_rated;
+        $input['buyone_getone'] = $request->buyone_getone;
 
         $product = Product::findOrFail($id);
         $product->update($input);
@@ -187,9 +188,9 @@ class ProductController extends Controller
 
 
     // Activate product
-    public function active($status_id)
+    public function active($id)
     {
-        $product = Product::where('status', $status_id)->first();
+        $product = Product::where('id', $id)->first();
         $product->update(['status'=>1]);
         $notification = array(
             'message' => 'Product successfully active.',
@@ -199,9 +200,9 @@ class ProductController extends Controller
     }
 
     // Inactivate product
-    public function inactive($status_id)
+    public function inactive($id)
     {
-        $product = Product::where('status', $status_id)->first();
+        $product = Product::where('id', $id)->first();
         $product->update(['status'=>0]);
         $notification = array(
             'message' => 'Product successfully inactive.',

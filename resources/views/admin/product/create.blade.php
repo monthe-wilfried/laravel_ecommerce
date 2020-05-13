@@ -23,7 +23,7 @@
 
                     <div class="form-layout">
                         <div class="row mg-b-25">
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Name: <span class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="product_name" placeholder="Enter product name" value="{{ old('product_name') }}">
@@ -34,7 +34,7 @@
                                     @endif
                                 </div>
                             </div><!-- col-4 -->
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Product Code: <span class="tx-danger">*</span></label>
                                     <input class="form-control" type="text" name="product_code" placeholder="Enter product code"  value="{{ old('product_code') }}">
@@ -45,13 +45,24 @@
                                     @endif
                                 </div>
                             </div><!-- col-4 -->
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group">
                                     <label class="form-control-label">Quantity: <span class="tx-danger">*</span></label>
                                     <input class="form-control" type="number" name="product_quantity" placeholder="Product quantity" value="{{ old('product_quantity') }}">
                                     @if($errors->has('product_quantity'))
                                         <div class="alert alert-danger" role="alert">
                                             <strong>{{ $errors->first('product_quantity') }}</strong>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div><!-- col-4 -->
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label">Discount Price: </label>
+                                    <input class="form-control" type="number" name="discount_price" placeholder="Discount Price" value="{{ old('discount_price') }}">
+                                    @if($errors->has('discount_price'))
+                                        <div class="alert alert-danger" role="alert">
+                                            <strong>{{ $errors->first('discount_price') }}</strong>
                                         </div>
                                     @endif
                                 </div>
@@ -225,6 +236,13 @@
                                 <label class="ckbox">
                                     <input type="checkbox" name="hot_new" value="1">
                                     <span>Hot New</span>
+                                </label>
+                            </div><!-- col-4 -->
+
+                            <div class="col-lg-4">
+                                <label class="ckbox">
+                                    <input type="checkbox" name="buyone_getone" value="1">
+                                    <span>Buy One Get One</span>
                                 </label>
                             </div><!-- col-4 -->
 

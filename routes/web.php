@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {return view('pages.index');});
 //auth & user
-Auth::routes();
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/password-change', 'HomeController@changePassword')->name('password.change');
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
@@ -66,8 +66,8 @@ Route::get('admin/newsletter/delete/{id}', 'Admin\Category\NewsletterController@
 Route::get('admin/products', 'Admin\ProductController@index')->name('admin.products.index');
 Route::get('admin/product/create', 'Admin\ProductController@create')->name('admin.product.create');
 Route::post('admin/product/store', 'Admin\ProductController@store')->name('admin.product.store');
-Route::get('admin/product/active/{status_id}', 'Admin\ProductController@active')->name('admin.product.active');
-Route::get('admin/product/inactive/{status_id}', 'Admin\ProductController@inactive')->name('admin.product.inactive');
+Route::get('admin/product/active/{id}', 'Admin\ProductController@active')->name('admin.product.active');
+Route::get('admin/product/inactive/{id}', 'Admin\ProductController@inactive')->name('admin.product.inactive');
 Route::get('admin/product/delete/{id}', 'Admin\ProductController@delete')->name('admin.product.delete');
 Route::get('admin/product/show/{id}', 'Admin\ProductController@show')->name('admin.product.show');
 Route::get('admin/product/edit/{id}', 'Admin\ProductController@edit')->name('admin.product.edit');
@@ -98,9 +98,20 @@ Route::put('admin/blog/post/update/{id}', 'Admin\PostController@blogPostUpdate')
 // Frontend - Newsletter
 Route::post('newsletter/store', 'FrontController@storeNewsletter')->name('newsletter.store');
 
+// Frontend - Add to Wishlist
+Route::get('add/wishlist/{id}', 'WishlistController@addWishlist');
 
+// Frontend - Add to Cart
+Route::get('add/to/cart/{id}', 'CartController@addCart');
+Route::get('check', 'CartController@check');
 
+Route::get('product/cart', 'CartController@showCart')->name('show.cart');
+Route::get('remove/cart/{rowId}', 'CartController@removeCart');
+Route::post('update/cart/item/quantity', 'CartController@updateQuantity')->name('update.cart.quantity');
 
+// Frontend - Product single page details
+Route::get('product/details/{id}/{product_name}', 'ProductController@productVew');
+Route::post('cart/product/add/{id}', 'ProductController@addCart');
 
 
 

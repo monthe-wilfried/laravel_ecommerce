@@ -29,6 +29,7 @@
                             <th class="wd-20p">Image</th>
                             <th class="wd-20p">Category</th>
                             <th class="wd-20p">Brand</th>
+                            <th class="wd-20p">Checked</th>
                             <th class="wd-20p">Quantity</th>
                             <th class="wd-20p">Status</th>
                             <th class="wd-20p">Action</th>
@@ -42,6 +43,31 @@
                                 <td><img src="{{ asset($product->image_one) ?? 'No Image' }}" height="50px" width="60px"></td>
                                 <td>{{ $product->category->name }}</td>
                                 <td>{{ $product->brand->name ?? 'No Brand' }}</td>
+                                <td>
+                                    @if($product->main_slider)
+                                        <span class="badge badge-secondary">Main Slider</span>
+                                    @endif
+                                    @if($product->trend)
+                                        <span class="badge badge-secondary">Trend</span>
+                                    @endif
+                                    @if($product->hot_deal)
+                                        <span class="badge badge-secondary">Hot Deal</span>
+                                    @endif
+                                        <br>
+                                    @if($product->mid_slider)
+                                        <span class="badge badge-secondary">Mid Slider</span>
+                                    @endif
+                                    @if($product->best_rated)
+                                        <span class="badge badge-secondary">Best Rated</span>
+                                    @endif
+                                    @if($product->hot_new)
+                                        <span class="badge badge-secondary">Hot New</span>
+                                    @endif
+                                        <br>
+                                    @if($product->buyone_getone)
+                                        <span class="badge badge-secondary">BuyOne GetOne</span>
+                                    @endif
+                                </td>
                                 <td>{{ $product->product_quantity}}</td>
                                 <td>
                                     @if($product->status == 1)
@@ -56,9 +82,9 @@
                                     <a href="{{ route('admin.product.show', $product->id) }}" class="btn btn-sm btn-warning"title="Show"><i class="fa fa-eye" aria-hidden="true"></i></a>
 
                                     @if($product->status == 1)
-                                        <a href="{{ route('admin.product.inactive', $product->status) }}" class="btn btn-sm btn-danger" title="Inactive"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a>
+                                        <a href="{{ route('admin.product.inactive', $product->id) }}" class="btn btn-sm btn-danger" title="Inactive"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a>
                                     @else
-                                        <a href="{{ route('admin.product.active', $product->status) }}" class="btn btn-sm btn-indigo" title="Active"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
+                                        <a href="{{ route('admin.product.active', $product->id) }}" class="btn btn-sm btn-indigo" title="Active"><i class="fa fa-thumbs-up" aria-hidden="true"></i></a>
                                     @endif
 
                                 </td>

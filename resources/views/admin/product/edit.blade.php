@@ -225,12 +225,23 @@
 
                             <div class="col-lg-4">
                                 <label class="ckbox">
-                                    <input type="checkbox" name="hot_new" value=""
+                                    <input type="checkbox" name="hot_new" value="1"
                                         @if($product->hot_new == 1)
                                            checked
                                         @endif
                                     >
                                     <span>Hot New</span>
+                                </label>
+                            </div><!-- col-4 -->
+
+                            <div class="col-lg-4">
+                                <label class="ckbox">
+                                    <input type="checkbox" name="buyone_getone" value="1"
+                                           @if($product->buyone_getone == 1)
+                                           checked
+                                        @endif
+                                    >
+                                    <span>Buy One Get One</span>
                                 </label>
                             </div><!-- col-4 -->
 
