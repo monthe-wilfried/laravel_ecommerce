@@ -478,6 +478,7 @@ class ComposerStaticInite3bae772c4b322f01cd1c02f89ef47e9
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
+        'App\\Setting' => __DIR__ . '/../..' . '/app/Setting.php',
         'App\\SubCategory' => __DIR__ . '/../..' . '/app/SubCategory.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\Wishlist' => __DIR__ . '/../..' . '/app/Wishlist.php',

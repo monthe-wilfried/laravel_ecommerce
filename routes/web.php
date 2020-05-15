@@ -98,26 +98,42 @@ Route::put('admin/blog/post/update/{id}', 'Admin\PostController@blogPostUpdate')
 // Frontend - Newsletter
 Route::post('newsletter/store', 'FrontController@storeNewsletter')->name('newsletter.store');
 
-// Frontend - Add to Wishlist
+// Frontend - Wishlist
 Route::get('add/wishlist/{id}', 'WishlistController@addWishlist');
+Route::get('user/wishlist', 'WishlistController@wishlist')->name('user.wishlist');
+Route::get('remove/wishlist/{product_id}', 'WishlistController@removeWishlist');
 
-// Frontend - Add to Cart
+// Frontend -  Cart
 Route::get('add/to/cart/{id}', 'CartController@addCart');
 Route::get('check', 'CartController@check');
 
 Route::get('product/cart', 'CartController@showCart')->name('show.cart');
 Route::get('remove/cart/{rowId}', 'CartController@removeCart');
+Route::get('remove/cart/all', 'CartController@removeAll')->name('remove.cart.all');
 Route::post('update/cart/item/quantity', 'CartController@updateQuantity')->name('update.cart.quantity');
+
+Route::get('cart/product/view/{id}', 'CartController@quickViewProduct');
+Route::post('insert/into/cart', 'CartController@insertCart')->name('insert.into.cart');
+
+// Coupon
+Route::post('user/apply/coupon', 'CartController@applyCoupon')->name('apply.coupon');
+Route::get('user/remove/coupon', 'CartController@removeCoupon')->name('coupon.remove');
+
 
 // Frontend - Product single page details
 Route::get('product/details/{id}/{product_name}', 'ProductController@productVew');
 Route::post('cart/product/add/{id}', 'ProductController@addCart');
 
+// User Checkout
+Route::get('user/checkout', 'CartController@checkout')->name('user.checkout');
 
 
+// Blog - Post
+Route::get('blog/post', 'BlogController@blog')->name('blog.post');
+Route::get('blog/post/{id}/{blog_title}', 'BlogController@singleBlog');
 
-
-
+Route::get('language/english', 'BlogController@english')->name('language.english');
+Route::get('language/german', 'BlogController@german')->name('language.german');
 
 
 

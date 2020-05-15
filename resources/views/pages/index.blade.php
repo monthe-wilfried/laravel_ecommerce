@@ -1596,22 +1596,67 @@
     </div>
 
 
-    <!-- Modal -->
+    <!-- Add to Cart Modal -->
     <div class="modal fade" id="cartmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLavel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Product Quick View</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <img src="" id="pimage" class="text-center">
+                                <div class="card-body">
+                                    <h5 class="cart-title text-center" id="pname"></h5>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <ul class="list-group">
+                                <li class="list-group-item">Code: <strong><span id="pcode"></span></strong></li>
+                                <li class="list-group-item">Category: <strong><span id="pcat"></span></strong></li>
+                                <li class="list-group-item">Sub Category: <strong><span id="psub"></span></strong></li>
+                                <li class="list-group-item">Brand: <strong><span id="pbrand"></span></strong></li>
+                                <li class="list-group-item">Stock: <span class="badge badge-success" style="background: green; color: white;">In Stock</span></li>
+                            </ul>
+                        </div>
+
+                        <form action="{{ route('insert.into.cart') }}" method="post">
+                        @csrf
+
+                        <input type="hidden" name="product_id" id="product_id">
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="exampleInputColor">Color</label>
+                                <select id="color" name="color" class="form-control">
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputColor">Size</label>
+                                <select id="size" name="size" class="form-control">
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputColor">Quantity</label>
+                                <input type="number" name="qty" class="form-control" value="1" pattern="[0-9]">
+                            </div>
+                            <br><br>
+                            <button type="submit" class="btn btn-primary">Add to cart</button>
+                        </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1621,6 +1666,37 @@
     <!-- Ajax code for wishlist and cart -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
+    <script>
+
+        function productview(id) {
+            $.ajax({
+                url: "{{ url('cart/product/view/') }}/"+id,
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $('#pname').text(data.product.product_name);
+                    $('#pimage').attr('src', data.product.image_one);
+                    $('#pcode').text(data.product.product_code);
+                    $('#pcat').text(data.category);
+                    $('#psub').text(data.sub_category);
+                    $('#pbrand').text(data.brand);
+                    $('#product_id').val(data.product.id);
+
+                    var d = $('select[name="color]').empty();
+                    $.each(data.color, function (key,value) {
+                        $('select[name="color"]').append('<option value="'+value+'">'+value+'</option>');
+                    })
+
+                    var d = $('select[name="size]').empty();
+                    $.each(data.size, function (key,value) {
+                        $('select[name="size"]').append('<option value="'+value+'">'+value+'</option>');
+                    })
+                }
+            })
+        }
+
+    </script>
 
 {{--    <script>--}}
 {{--        $(document).ready(function () {--}}

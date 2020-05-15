@@ -33,22 +33,35 @@
 
         <!-- Top Bar -->
 
+        @php
+
+            $setting = \App\Setting::all();
+
+        @endphp
+
         <div class="top_bar">
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}" alt=""></div>+38 068 005 3570</div>
-                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
-                        <div class="top_bar_content ml-auto">
+                        @foreach($setting as $row)
+                            <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}" alt=""></div>{{ $row->phone }}</div>
+                            <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}" alt=""></div><a href="mailto:{{ $row->email }}">{{ $row->email }}</a></div>
+                        @endforeach
+                            <div class="top_bar_content ml-auto">
                             <div class="top_bar_menu">
                                 <ul class="standard_dropdown top_bar_dropdown">
+
+                                    @php
+                                        $language = session()->get('lang')
+                                    @endphp
+
                                     <li>
-                                        <a href="#">English<i class="fas fa-chevron-down"></i></a>
-                                        <ul>
-                                            <li><a href="#">Italian</a></li>
-                                            <li><a href="#">Spanish</a></li>
-                                            <li><a href="#">Japanese</a></li>
-                                        </ul>
+                                        @if($language == 'german')
+                                            <a href="{{ route('language.english') }}"><img src="{{ asset('public/frontend/images/us.svg') }}" style="width: 20px; height: 20px; border-radius: 70px;"> English<i class="fas fa-chevron-down"></i></a>
+                                        @else
+                                            <a href="{{ route('language.german') }}"><img src="{{ asset('public/frontend/images/de.svg') }}" style="width: 20px; height: 20px; border-radius: 70px;"> German<i class="fas fa-chevron-down"></i></a>
+                                        @endif
+
                                     </li>
                                 </ul>
                             </div>
@@ -62,8 +75,8 @@
                                         <li>
                                             <a href="{{ route('home') }}"><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}" alt=""></div>Profile<i class="fas fa-chevron-down"></i></a>
                                             <ul>
-                                                <li><a href="#">Wishlist</a></li>
-                                                <li><a href="#">Checkout</a></li>
+                                                <li><a href="{{ route('user.wishlist') }}">Wishlist</a></li>
+                                                <li><a href="{{ route('user.checkout') }}">Checkout</a></li>
                                                 <li><a href="#">Others</a></li>
                                             </ul>
                                         </li>
@@ -133,7 +146,7 @@
                                         <div class="cart_count"><span>{{ $wishlistCount }}</span></div>
                                     </div>
                                     <div class="wishlist_content">
-                                        <div class="wishlist_text"><a href="#">Wishlist</a></div>
+                                        <div class="wishlist_text"><a href="{{ route('user.wishlist') }}">Wishlist</a></div>
 {{--                                        <div class="wishlist_count">{{ $wishlistCount }}</div>--}}
                                     </div>
                                 @endauth
@@ -247,7 +260,7 @@
 
                     <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
                         <div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://github.com/monthe-wilfried" target="_blank">Monthe Wilfried</a>
                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                         <div class="logos ml-sm-auto">
@@ -280,6 +293,8 @@
 <script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
 <script src="{{ asset('public/frontend/js/cart_custom.js') }}"></script>
 <script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+<script src="{{ asset('public/frontend/js/blog_custom.js') }}"></script>
+<script src="{{ asset('public/frontend/js/blog_single_custom.js') }}"></script>
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 

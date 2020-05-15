@@ -7,6 +7,7 @@ use App\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class WishlistController extends Controller
 {
@@ -30,4 +31,39 @@ class WishlistController extends Controller
            return \Response::json(['error'=>'Log in first to your account']);
         }
     }
+
+    // Show wishlist view
+    public function wishlist(){
+
+        if (Auth::check()){
+            $user_id = Auth::id();
+            $products = DB::table('wishlists')
+                        ->join('products', 'wishlists.product_id', 'products.id')
+                        ->select('products.*', 'wishlists.user_id')
+                        ->where('wishlists.user_id', $user_id)
+                        ->get();
+            return view('pages.wishlist', compact('products'));
+        }
+        else{
+            $notification=array(
+                'message'=>'Login first to your account!',
+                'alert-type'=>'error'
+            );
+            return Redirect()->back()->with($notification);
+        }
+    }
+
+    // Remove individual product from wishlist
+    public function removeWishlist($product_id){
+        $product = Wishlist::where('product_id', $product_id)->first();
+        $product->delete();
+        $notification=array(
+            'message'=>'Product removed from wishlist',
+            'alert-type'=>'success'
+        );
+        return Redirect()->back()->with($notification);
+    }
+
+
+
 }

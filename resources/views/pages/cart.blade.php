@@ -193,7 +193,7 @@
 
                                                     <div class="cart_item_total cart_info_col">
                                                         <div class="cart_item_title">Action</div>
-                                                        <div class="cart_item_text"><a href="{{ url('remove/cart/'.$row->rowId) }}" title="Remove" class="btn btn-sm btn-danger">x</a></div>
+                                                        <div class="cart_item_text"><a href="{{ url('remove/cart/'.$row->rowId) }}" title="Remove from cart" class="btn btn-sm btn-danger">x</a></div>
                                                     </div>
                                                 </div>
                                             </li>
@@ -213,8 +213,8 @@
                             </div>
 
                             <div class="cart_buttons">
-                                <button type="button" class="button cart_button_clear">Remove All</button>
-                                <button type="button" class="button cart_button_checkout">Checkout</button>
+                                <a href="{{ route('remove.cart.all') }}" type="button" class="button cart_button_clear">Remove All</a>
+                                <a href="{{ route('user.checkout') }}" class="button cart_button_checkout">Checkout</a>
                             </div>
                         @else
 

@@ -163,7 +163,7 @@
                                                 <label for="exampleFormControlSelect1">Color</label>
                                                 <select class="form-control input-lg" id="exampleFormControlSelect1" name="color" >
                                                     @foreach($product_color as $color)
-                                                        <option value="{{ strtoupper($color) }}">{{ strtoupper($color) }}</option>
+                                                        <option value="{{ $color }}">{{ $color }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -174,7 +174,7 @@
                                                 <label for="exampleFormControlSelect2">Size</label>
                                                 <select class="form-control input-lg" id="exampleFormControlSelect2" name="size">
                                                     @foreach($product_size as $size)
-                                                        <option value="{{ strtoupper($size) }}">{{ strtoupper($size) }}</option>
+                                                        <option value="{{ $size }}">{{ $size }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
