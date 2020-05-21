@@ -74,6 +74,8 @@
                         <span class="menu-item-label">Dashboard</span>
                     </div><!-- menu-item -->
                 </a><!-- sl-menu-link -->
+
+                @if(Auth::user()->category == 1)
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
                         <i class="menu-item-icon ion-ios-pie-outline tx-20"></i>
@@ -86,9 +88,12 @@
                     <li class="nav-item"><a href="{{ route('sub.categories.index') }}" class="nav-link">Sub Categories</a></li>
                     <li class="nav-item"><a href="{{ route('brands.index') }}" class="nav-link">Brands</a></li>
                 </ul>
+                @endif
+
+                @if(Auth::user()->coupon == 1)
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
-                        <i class="menu-item-icon icon ion-ios-gear-outline tx-24"></i>
+                        <i class="fa fa-scissors" aria-hidden="true"></i>
                         <span class="menu-item-label">Coupon</span>
                         <i class="menu-item-arrow fa fa-angle-down"></i>
                     </div><!-- menu-item -->
@@ -96,9 +101,12 @@
                 <ul class="sl-menu-sub nav flex-column">
                     <li class="nav-item"><a href="{{ route('admin.coupons.index') }}" class="nav-link">Coupons</a></li>
                 </ul>
+                @endif
+
+                @if(Auth::user()->product == 1)
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
-                        <i class="menu-item-icon icon ion-ios-bookmarks-outline tx-20"></i>
+                        <i class="fa fa-product-hunt" aria-hidden="true"></i>
                         <span class="menu-item-label">Products</span>
                         <i class="menu-item-arrow fa fa-angle-down"></i>
                     </div><!-- menu-item -->
@@ -107,9 +115,29 @@
                     <li class="nav-item"><a href="{{ route('admin.product.create') }}" class="nav-link">Add Product</a></li>
                     <li class="nav-item"><a href="{{ route('admin.products.index') }}" class="nav-link">All Products</a></li>
                 </ul>
+                @endif
+
+                @if(Auth::user()->order == 1)
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
-                        <i class="menu-item-icon icon ion-ios-bookmarks-outline tx-20"></i>
+                        <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                        <span class="menu-item-label">Orders</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="{{ route('admin.new.order') }}" class="nav-link">New Order</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.accept.payment') }}" class="nav-link">Accept Payment</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.process.order') }}" class="nav-link">Process Delivery</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.success.delivery') }}" class="nav-link">Delivery Success</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.cancel.order') }}" class="nav-link">Cancel Order</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->blog == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-bold" aria-hidden="true"></i>
                         <span class="menu-item-label">Blog</span>
                         <i class="menu-item-arrow fa fa-angle-down"></i>
                     </div><!-- menu-item -->
@@ -119,9 +147,12 @@
                     <li class="nav-item"><a href="{{ route('admin.blog.post.create') }}" class="nav-link">Add Post</a></li>
                     <li class="nav-item"><a href="{{ route('admin.blog.posts.index') }}" class="nav-link">All Posts</a></li>
                 </ul>
+                @endif
+
+                @if(Auth::user()->newsletter == 1)
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
-                        <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                         <span class="menu-item-label">Newsletters</span>
                         <i class="menu-item-arrow fa fa-angle-down"></i>
                     </div><!-- menu-item -->
@@ -129,6 +160,102 @@
                 <ul class="sl-menu-sub nav flex-column">
                     <li class="nav-item"><a href="{{ route('admin.newsletters.index') }}" class="nav-link">Subscribers</a></li>
                 </ul>
+                @endif
+
+                @if(Auth::user()->seo == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <span class="menu-item-label">SEO</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="{{ route('admin.seo') }}" class="nav-link">SEO Setting</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->report == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        <span class="menu-item-label">Report</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="{{ route('search.report') }}" class="nav-link">Search Report</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->role == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                        <span class="menu-item-label">User Role</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="{{ route('admin.create') }}" class="nav-link">Create User</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.all.user') }}" class="nav-link">All Users</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->order == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-backward" aria-hidden="true"></i>
+                        <span class="menu-item-label">Return Order</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="{{ route('admin.return.request') }}" class="nav-link">Return Request</a></li>
+                    <li class="nav-item"><a href="{{ route('admin.all.request') }}" class="nav-link">All Request</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->contact == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <span class="menu-item-label">Contact Messages</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="" class="nav-link">New Message</a></li>
+                    <li class="nav-item"><a href="" class="nav-link">All Messages</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->review == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        <span class="menu-item-label">Product Reviews</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="" class="nav-link">New Review</a></li>
+                    <li class="nav-item"><a href="" class="nav-link">All Reviews</a></li>
+                </ul>
+                @endif
+
+                @if(Auth::user()->setting == 1)
+                <a href="#" class="sl-menu-link">
+                    <div class="sl-menu-item">
+                        <i class="fa fa-cogs" aria-hidden="true"></i>
+                        <span class="menu-item-label">Site Settings</span>
+                        <i class="menu-item-arrow fa fa-angle-down"></i>
+                    </div><!-- menu-item -->
+                </a><!-- sl-menu-link -->
+                <ul class="sl-menu-sub nav flex-column">
+                    <li class="nav-item"><a href="{{ route('admin.site.setting') }}" class="nav-link">Site Setting</a></li>
+                </ul>
+                @endif
             </div><!-- sl-sideleft-menu -->
 
             <br>
@@ -145,7 +272,7 @@
                 <nav class="nav">
                     <div class="dropdown">
                         <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
-                            <span class="logged-name">Hi, Jane<span class="hidden-md-down"> Doe</span></span>
+                            <span class="logged-name"><span class="hidden-md-down">Hi, {{ Auth::user()->name }}</span></span>
                             <img src="{{ asset('public/backend/img/img3.jpg') }}" class="wd-32 rounded-circle" alt="">
                         </a>
                         <div class="dropdown-menu dropdown-menu-header wd-200">

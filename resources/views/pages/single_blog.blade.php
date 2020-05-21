@@ -127,17 +127,9 @@
     <!-- Home -->
 
     <div class="home">
-        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('public/frontend/images/shop_background.jpg') }}"></div>
-        <div class="home_overlay"></div>
-        <div class="home_content d-flex flex-column align-items-center justify-content-center">
-            @if(session()->get('lang') == 'english')
-                <h2 class="home_title">Educational Blog</h2>
-            @else
-                <h2 class="home_title">Pädagogischer Blog</h2>
-            @endif
-
-        </div>
+        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('public/frontend/images/blog_single_background.jpg') }}" data-speed="0.8"></div>
     </div>
+    <br><br><br><br>
 
     <!-- Single Blog Post -->
 

@@ -20,6 +20,10 @@
     <!-- chart -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
     <link rel="stylesheet" href="sweetalert2.min.css">
+
+
+    <script src="https://js.stripe.com/v3/"></script>
+
     @yield('styles')
 </head>
 
@@ -35,7 +39,7 @@
 
         @php
 
-            $setting = \App\Setting::all();
+            $setting = DB::table('sitesetting')->first();
 
         @endphp
 
@@ -43,11 +47,20 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        @foreach($setting as $row)
-                            <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}" alt=""></div>{{ $row->phone }}</div>
-                            <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}" alt=""></div><a href="mailto:{{ $row->email }}">{{ $row->email }}</a></div>
-                        @endforeach
-                            <div class="top_bar_content ml-auto">
+                            <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}" alt=""></div>{{ $setting->phone_one }}</div>
+                            <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}" alt=""></div><a href="mailto:{{ $setting->email }}">{{ $setting->email }}</a></div>
+                        <div class="top_bar_content ml-auto">
+                            @auth()
+                                <div class="top_bar_menu">
+                                    <ul class="standard_dropdown top_bar_dropdown">
+
+                                        <li>
+                                            <a href="" data-toggle="modal" data-target="#exampleModal">My Order Tracking</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endauth
+
                             <div class="top_bar_menu">
                                 <ul class="standard_dropdown top_bar_dropdown">
 
@@ -65,6 +78,7 @@
                                     </li>
                                 </ul>
                             </div>
+
                             <div class="top_bar_user">
                                 @guest()
                                     <div><a href="{{ route('login') }}">
@@ -147,7 +161,7 @@
                                     </div>
                                     <div class="wishlist_content">
                                         <div class="wishlist_text"><a href="{{ route('user.wishlist') }}">Wishlist</a></div>
-{{--                                        <div class="wishlist_count">{{ $wishlistCount }}</div>--}}
+                                        {{--                                        <div class="wishlist_count">{{ $wishlistCount }}</div>--}}
                                     </div>
                                 @endauth
                             </div>
@@ -161,7 +175,7 @@
                                     </div>
                                     <div class="cart_content">
                                         <div class="cart_text"><a href="{{ route('show.cart') }}">Cart</a></div>
-                                        <div class="cart_price">${{ Auth::check() ? Cart::total() : 0 }}</div>
+                                        <div class="cart_price">${{ Auth::check() ? Cart::subtotal() : 0 }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -176,104 +190,128 @@
 
     <!-- Footer -->
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
 
-                <div class="col-lg-3 footer_col">
-                    <div class="footer_column footer_contact">
-                        <div class="logo_container">
-                            <div class="logo"><a href="#">OneTech</a></div>
+                    <div class="col-lg-3 footer_col">
+                        <div class="footer_column footer_contact">
+                            <div class="logo_container">
+                                <div class="logo"><a href="#">{{ $setting->company_name }}</a></div>
+                            </div>
+                            <div class="footer_title">Got Question? Call Us 24/7</div>
+                            <div class="footer_phone">{{ $setting->phone_two }}</div>
+                            <div class="footer_contact_text">
+                                <p>{{ $setting->company_address }}</p>
+                            </div>
+                            <div class="footer_social">
+                                <ul>
+                                    <li><a href="{{ $setting->facebook }}"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="{{ $setting->twitter }}"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="{{ $setting->youtube }}"><i class="fab fa-youtube"></i></a></li>
+                                    <li><a href="{{ $setting->instagram }}"><i class="fab fa-instagram"></i></a></li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="footer_title">Got Question? Call Us 24/7</div>
-                        <div class="footer_phone">+38 068 005 3570</div>
-                        <div class="footer_contact_text">
-                            <p>17 Princess Road, London</p>
-                            <p>Grester London NW18JR, UK</p>
-                        </div>
-                        <div class="footer_social">
-                            <ul>
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google"></i></a></li>
-                                <li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+                    </div>
+
+                    <div class="col-lg-2 offset-lg-2">
+                        <div class="footer_column">
+                            <div class="footer_title">Find it Fast</div>
+                            <ul class="footer_list">
+                                <li><a href="#">Computers & Laptops</a></li>
+                                <li><a href="#">Cameras & Photos</a></li>
+                                <li><a href="#">Hardware</a></li>
+                                <li><a href="#">Smartphones & Tablets</a></li>
+                                <li><a href="#">TV & Audio</a></li>
+                            </ul>
+                            <div class="footer_subtitle">Gadgets</div>
+                            <ul class="footer_list">
+                                <li><a href="#">Car Electronics</a></li>
                             </ul>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-lg-2 offset-lg-2">
-                    <div class="footer_column">
-                        <div class="footer_title">Find it Fast</div>
-                        <ul class="footer_list">
-                            <li><a href="#">Computers & Laptops</a></li>
-                            <li><a href="#">Cameras & Photos</a></li>
-                            <li><a href="#">Hardware</a></li>
-                            <li><a href="#">Smartphones & Tablets</a></li>
-                            <li><a href="#">TV & Audio</a></li>
-                        </ul>
-                        <div class="footer_subtitle">Gadgets</div>
-                        <ul class="footer_list">
-                            <li><a href="#">Car Electronics</a></li>
-                        </ul>
+                    <div class="col-lg-2">
+                        <div class="footer_column">
+                            <ul class="footer_list footer_list_2">
+                                <li><a href="#">Video Games & Consoles</a></li>
+                                <li><a href="#">Accessories</a></li>
+                                <li><a href="#">Cameras & Photos</a></li>
+                                <li><a href="#">Hardware</a></li>
+                                <li><a href="#">Computers & Laptops</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="footer_column">
+                            <div class="footer_title">Customer Care</div>
+                            <ul class="footer_list">
+                                <li><a href="#">My Account</a></li>
+                                <li><a href="#">Order Tracking</a></li>
+                                <li><a href="#">Wish List</a></li>
+                                <li><a href="#">Customer Services</a></li>
+                                <li><a href="#">Returns / Exchange</a></li>
+                                <li><a href="#">FAQs</a></li>
+                                <li><a href="#">Product Support</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+        <!-- Copyright -->
+
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
+                            <div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://github.com/monthe-wilfried" target="_blank">Monthe Wilfried</a>
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </div>
+                            <div class="logos ml-sm-auto">
+                                <ul class="logos_list">
+                                    <li><a href="#"><img src="{{ asset('public/frontend/images/logos_1.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('public/frontend/images/logos_2.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('public/frontend/images/logos_3.png') }}" alt=""></a></li>
+                                    <li><a href="#"><img src="{{ asset('public/frontend/images/logos_4.png') }}" alt=""></a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div class="col-lg-2">
-                    <div class="footer_column">
-                        <ul class="footer_list footer_list_2">
-                            <li><a href="#">Video Games & Consoles</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Cameras & Photos</a></li>
-                            <li><a href="#">Hardware</a></li>
-                            <li><a href="#">Computers & Laptops</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-2">
-                    <div class="footer_column">
-                        <div class="footer_title">Customer Care</div>
-                        <ul class="footer_list">
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Order Tracking</a></li>
-                            <li><a href="#">Wish List</a></li>
-                            <li><a href="#">Customer Services</a></li>
-                            <li><a href="#">Returns / Exchange</a></li>
-                            <li><a href="#">FAQs</a></li>
-                            <li><a href="#">Product Support</a></li>
-                        </ul>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </footer>
+</div>
 
-    <!-- Copyright -->
-
-    <div class="copyright">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-
-                    <div class="copyright_container d-flex flex-sm-row flex-column align-items-center justify-content-start">
-                        <div class="copyright_content"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://github.com/monthe-wilfried" target="_blank">Monthe Wilfried</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                        <div class="logos ml-sm-auto">
-                            <ul class="logos_list">
-                                <li><a href="#"><img src="{{ asset('public/frontend/images/logos_1.png') }}" alt=""></a></li>
-                                <li><a href="#"><img src="{{ asset('public/frontend/images/logos_2.png') }}" alt=""></a></li>
-                                <li><a href="#"><img src="{{ asset('public/frontend/images/logos_3.png') }}" alt=""></a></li>
-                                <li><a href="#"><img src="{{ asset('public/frontend/images/logos_4.png') }}" alt=""></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+<!-- Order Tracking Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Your Tracking Number</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                <form action="{{ route('order.tracking') }}" method="post">
+                    @csrf
+                    <div class="card-body">
+                        <input type="text" name="code" class="form-control" placeholder="Enter your code here" required>
+                        <br>
+                        <button class="btn btn-danger" type="submit">Track Now</button>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -296,11 +334,19 @@
 <script src="{{ asset('public/frontend/js/blog_custom.js') }}"></script>
 <script src="{{ asset('public/frontend/js/blog_single_custom.js') }}"></script>
 
+
+<script src="{{ asset('public/frontend/plugins/Isotope/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('public/frontend/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') }}"></script>
+<script src="{{ asset('public/frontend/plugins/parallax-js-master/parallax.min.js') }}"></script>
+<script src="{{ asset('public/frontend/js/shop_custom.js') }}"></script>
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
+
+@yield('styles')
 
 <script>
         @if(Session::has('message'))
@@ -320,6 +366,27 @@
             break;
     }
     @endif
+</script>
+
+<script>
+    $(document).on("click", "#return", function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+        swal({
+            title: "Do you want to return?",
+            text: "Once returned, we will return your money",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = link;
+                } else {
+                    swal("Canceled!");
+                }
+            });
+    });
 </script>
 @yield('scripts')
 </body>

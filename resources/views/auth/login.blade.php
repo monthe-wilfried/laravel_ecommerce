@@ -37,7 +37,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <a href="{{ route('password.request') }}"  >I forgot my password</a>
+                                    <a href="{{ route('password.request') }}">I forgot my password</a>
                                 </div>
                                 <br>
                                 <button type="submit" class="btn btn-dark btn-block"><i class="far fa-envelope"></i> Login with Email</button>

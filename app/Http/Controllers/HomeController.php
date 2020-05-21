@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Shipping;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -83,4 +85,25 @@ class HomeController extends Controller
 
 
     }
+
+    // Display user Orders
+    public function viewOrder($id){
+        $order = DB::table('orders')
+            ->join('users', 'orders.user_id', 'users.id')
+            ->select('orders.*', 'users.name', 'users.phone')
+            ->where('orders.id', $id)
+            ->first();
+
+        $shipping = Shipping::where('order_id', $id)->first();
+
+        $details = DB::table('order_details')
+            ->join('products', 'order_details.product_id', 'products.id')
+            ->select('order_details.*', 'products.product_code', 'products.image_one')
+            ->where('order_id', $id)
+            ->get();
+
+        return view('pages.view_order', compact('order', 'shipping', 'details'));
+
+    }
+
 }

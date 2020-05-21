@@ -78,6 +78,7 @@ final class Test
      * @throws CodeCoverageException
      *
      * @return array|bool
+     * @psalm-param class-string $className
      */
     public static function getLinesToBeCovered(string $className, string $methodName)
     {
@@ -97,6 +98,7 @@ final class Test
      * Returns lines of code specified with the @uses annotation.
      *
      * @throws CodeCoverageException
+     * @psalm-param class-string $className
      */
     public static function getLinesToBeUsed(string $className, string $methodName): array
     {
@@ -132,6 +134,7 @@ final class Test
 
     /**
      * @throws Exception
+     * @psalm-param class-string $className
      */
     public static function getRequirements(string $className, string $methodName): array
     {
@@ -146,6 +149,7 @@ final class Test
      *
      * @throws Exception
      * @throws Warning
+     * @psalm-param class-string $className
      */
     public static function getMissingRequirements(string $className, string $methodName): array
     {
@@ -154,13 +158,11 @@ final class Test
         $hint     = null;
 
         if (!empty($required['PHP'])) {
-            $operator = empty($required['PHP']['operator']) ? '>=' : $required['PHP']['operator'];
+            $operator = new VersionComparisonOperator(empty($required['PHP']['operator']) ? '>=' : $required['PHP']['operator']);
 
-            self::ensureOperatorIsValid($operator);
-
-            if (!\version_compare(\PHP_VERSION, $required['PHP']['version'], $operator)) {
-                $missing[] = \sprintf('PHP %s %s is required.', $operator, $required['PHP']['version']);
-                $hint      = $hint ?? 'PHP';
+            if (!\version_compare(\PHP_VERSION, $required['PHP']['version'], $operator->asString())) {
+                $missing[] = \sprintf('PHP %s %s is required.', $operator->asString(), $required['PHP']['version']);
+                $hint      = 'PHP';
             }
         } elseif (!empty($required['PHP_constraint'])) {
             $version = new \PharIo\Version\Version(self::sanitizeVersionNumber(\PHP_VERSION));
@@ -171,19 +173,17 @@ final class Test
                     $required['PHP_constraint']['constraint']->asString()
                 );
 
-                $hint = $hint ?? 'PHP_constraint';
+                $hint = 'PHP_constraint';
             }
         }
 
         if (!empty($required['PHPUnit'])) {
             $phpunitVersion = Version::id();
 
-            $operator = empty($required['PHPUnit']['operator']) ? '>=' : $required['PHPUnit']['operator'];
+            $operator = new VersionComparisonOperator(empty($required['PHPUnit']['operator']) ? '>=' : $required['PHPUnit']['operator']);
 
-            self::ensureOperatorIsValid($operator);
-
-            if (!\version_compare($phpunitVersion, $required['PHPUnit']['version'], $operator)) {
-                $missing[] = \sprintf('PHPUnit %s %s is required.', $operator, $required['PHPUnit']['version']);
+            if (!\version_compare($phpunitVersion, $required['PHPUnit']['version'], $operator->asString())) {
+                $missing[] = \sprintf('PHPUnit %s %s is required.', $operator->asString(), $required['PHPUnit']['version']);
                 $hint      = $hint ?? 'PHPUnit';
             }
         } elseif (!empty($required['PHPUnit_constraint'])) {
@@ -256,12 +256,10 @@ final class Test
             foreach ($required['extension_versions'] as $extension => $req) {
                 $actualVersion = \phpversion($extension);
 
-                $operator = empty($req['operator']) ? '>=' : $req['operator'];
+                $operator = new VersionComparisonOperator(empty($req['operator']) ? '>=' : $req['operator']);
 
-                self::ensureOperatorIsValid($operator);
-
-                if ($actualVersion === false || !\version_compare($actualVersion, $req['version'], $operator)) {
-                    $missing[] = \sprintf('Extension %s %s %s is required.', $extension, $operator, $req['version']);
+                if ($actualVersion === false || !\version_compare($actualVersion, $req['version'], $operator->asString())) {
+                    $missing[] = \sprintf('Extension %s %s %s is required.', $extension, $operator->asString(), $req['version']);
                     $hint      = $hint ?? 'extension_' . $extension;
                 }
             }
@@ -282,6 +280,7 @@ final class Test
      *
      * @deprecated
      * @codeCoverageIgnore
+     * @psalm-param class-string $className
      */
     public static function getExpectedException(string $className, string $methodName)
     {
@@ -292,12 +291,16 @@ final class Test
      * Returns the provided data for a method.
      *
      * @throws Exception
+     * @psalm-param class-string $className
      */
     public static function getProvidedData(string $className, string $methodName): ?array
     {
         return Registry::getInstance()->forMethod($className, $methodName)->getProvidedData();
     }
 
+    /**
+     * @psalm-param class-string $className
+     */
     public static function parseTestMethodAnnotations(string $className, ?string $methodName = ''): array
     {
         $registry = Registry::getInstance();
@@ -319,11 +322,15 @@ final class Test
         ];
     }
 
+    /**
+     * @psalm-param class-string $className
+     */
     public static function getInlineAnnotations(string $className, string $methodName): array
     {
         return Registry::getInstance()->forMethod($className, $methodName)->getInlineAnnotations();
     }
 
+    /** @psalm-param class-string $className */
     public static function getBackupSettings(string $className, string $methodName): array
     {
         return [
@@ -340,6 +347,7 @@ final class Test
         ];
     }
 
+    /** @psalm-param class-string $className */
     public static function getDependencies(string $className, string $methodName): array
     {
         $annotations = self::parseTestMethodAnnotations(
@@ -359,6 +367,7 @@ final class Test
         return \array_unique($dependencies);
     }
 
+    /** @psalm-param class-string $className */
     public static function getGroups(string $className, ?string $methodName = ''): array
     {
         $annotations = self::parseTestMethodAnnotations(
@@ -403,6 +412,7 @@ final class Test
         return \array_unique(\array_merge([], ...$groups));
     }
 
+    /** @psalm-param class-string $className */
     public static function getSize(string $className, ?string $methodName): int
     {
         $groups = \array_flip(self::getGroups($className, $methodName));
@@ -422,6 +432,7 @@ final class Test
         return self::UNKNOWN;
     }
 
+    /** @psalm-param class-string $className */
     public static function getProcessIsolationSettings(string $className, string $methodName): bool
     {
         $annotations = self::parseTestMethodAnnotations(
@@ -432,6 +443,7 @@ final class Test
         return isset($annotations['class']['runTestsInSeparateProcesses']) || isset($annotations['method']['runInSeparateProcess']);
     }
 
+    /** @psalm-param class-string $className */
     public static function getClassProcessIsolationSettings(string $className, string $methodName): bool
     {
         $annotations = self::parseTestMethodAnnotations(
@@ -442,6 +454,7 @@ final class Test
         return isset($annotations['class']['runClassInSeparateProcess']);
     }
 
+    /** @psalm-param class-string $className */
     public static function getPreserveGlobalStateSettings(string $className, string $methodName): ?bool
     {
         return self::getBooleanAnnotationSetting(
@@ -522,6 +535,7 @@ final class Test
 
     /**
      * @throws CodeCoverageException
+     * @psalm-param class-string $className
      */
     private static function getLinesToBeCoveredOrUsed(string $className, string $methodName, string $mode): array
     {
@@ -588,6 +602,7 @@ final class Test
         ];
     }
 
+    /** @psalm-param class-string $className */
     private static function getBooleanAnnotationSetting(string $className, ?string $methodName, string $settingName): ?bool
     {
         $annotations = self::parseTestMethodAnnotations(
@@ -628,6 +643,7 @@ final class Test
         if (\function_exists($element) && \strpos($element, '\\') !== false) {
             try {
                 $codeToCoverList[] = new \ReflectionFunction($element);
+                // @codeCoverageIgnoreStart
             } catch (\ReflectionException $e) {
                 throw new Exception(
                     $e->getMessage(),
@@ -635,6 +651,7 @@ final class Test
                     $e
                 );
             }
+            // @codeCoverageIgnoreEnd
         } elseif (\strpos($element, '::') !== false) {
             [$className, $methodName] = \explode('::', $element);
 
@@ -656,6 +673,7 @@ final class Test
 
                     try {
                         $methods = (new \ReflectionClass($className))->getMethods();
+                        // @codeCoverageIgnoreStart
                     } catch (\ReflectionException $e) {
                         throw new Exception(
                             $e->getMessage(),
@@ -663,6 +681,7 @@ final class Test
                             $e
                         );
                     }
+                    // @codeCoverageIgnoreEnd
 
                     $inverse    = isset($methodName[1]) && $methodName[1] === '!';
                     $visibility = 'isPublic';
@@ -690,6 +709,7 @@ final class Test
                             $codeToCoverList[] = new \ReflectionFunction(
                                 $methodName
                             );
+                            // @codeCoverageIgnoreStart
                         } catch (\ReflectionException $e) {
                             throw new Exception(
                                 $e->getMessage(),
@@ -697,6 +717,7 @@ final class Test
                                 $e
                             );
                         }
+                        // @codeCoverageIgnoreEnd
                     } else {
                         if (!((\class_exists($className) || \interface_exists($className) || \trait_exists($className)) &&
                             \method_exists($className, $methodName))) {
@@ -714,6 +735,7 @@ final class Test
                                 $className,
                                 $methodName
                             );
+                            // @codeCoverageIgnoreStart
                         } catch (\ReflectionException $e) {
                             throw new Exception(
                                 $e->getMessage(),
@@ -721,6 +743,7 @@ final class Test
                                 $e
                             );
                         }
+                        // @codeCoverageIgnoreEnd
                     }
                 }
             }
@@ -757,6 +780,7 @@ final class Test
 
                 try {
                     $codeToCoverList[] = new \ReflectionClass($className);
+                    // @codeCoverageIgnoreStart
                 } catch (\ReflectionException $e) {
                     throw new Exception(
                         $e->getMessage(),
@@ -764,6 +788,7 @@ final class Test
                         $e
                     );
                 }
+                // @codeCoverageIgnoreEnd
             }
         }
 
@@ -865,20 +890,5 @@ final class Test
         }
 
         return $a;
-    }
-
-    /*
-     * @throws Exception
-     */
-    private static function ensureOperatorIsValid(string $operator): void
-    {
-        if (!\in_array($operator, ['<', 'lt', '<=', 'le', '>', 'gt', '>=', 'ge', '==', '=', 'eq', '!=', '<>', 'ne'])) {
-            throw new Exception(
-                \sprintf(
-                    '"%s" is not a valid version_compare() operator',
-                    $operator
-                )
-            );
-        }
     }
 }

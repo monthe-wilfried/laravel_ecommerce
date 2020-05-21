@@ -23,31 +23,16 @@
                             </div>
 
                             <ul class="cat_menu">
-                                <li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-                                <li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-                                <li class="hassubs">
-                                    <a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-                                    <ul>
-                                        <li class="hassubs">
-                                            <a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-                                            <ul>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+                                @foreach($categories as $category)
+                                    <li class="hassubs">
+                                        <a href="{{ url('products/categories/'.$category->id) }}">{{ $category->name }}<i class="fas fa-chevron-right"></i></a>
+                                        <ul>
+                                            @foreach($category->sub_categories as $sub_category)
+                                                <li><a href="{{ url('products/'.$sub_category->id) }}">{{ $sub_category->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
 
@@ -201,7 +186,11 @@
 
                                     <div class="button_container">
                                         <button type="submit" class="button cart_button">Add to Cart</button>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+{{--                                        <div class="product_fav" style="color: red"><i class="fas fa-heart"></i></div>--}}
+                                        <br><br>
+                                        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                                        <div class="addthis_inline_share_toolbox"></div>
+
                                     </div>
                                 </div>
                             </form>
@@ -237,7 +226,11 @@
                     <div class="tab-content" id="myTabContent"><br>
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{!! $product->product_details !!} </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">{{ $product->video_link ?? 'No Video Link' }}</div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">{{ 'No product reviews' }}</div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <!-- Facebook Comment Plugin -->
+                            <div class="fb-comments" data-href="{{ Request::url() }}" data-numposts="5" data-width=""></div>
+
+                        </div>
                     </div>
 
                 </div>
@@ -309,6 +302,12 @@
         </div>
     </div>
 
+    <!-- Facebook Plugin Javascript code -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v7.0&appId=1199829013458404&autoLogAppEvents=1"></script>
 
+    <!-- Share to social site JS code -->
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5ec5d0ea8c48f9a7"></script>
 
 @endsection

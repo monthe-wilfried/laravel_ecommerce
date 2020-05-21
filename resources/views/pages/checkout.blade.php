@@ -99,7 +99,7 @@
                                         <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
                                     </ul>
                                 </li>
-                                <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="{{ route('blog.post') }}">Blog<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
                             </ul>
                         </div>
@@ -248,7 +248,7 @@
 
             <div class="cart_buttons">
                 <button type="button" class="button cart_button_clear">Remove All</button>
-                <a href="{{ route('user.checkout') }}" class="button cart_button_checkout">Checkout</a>
+                <a href="{{ route('payment.step') }}" class="button cart_button_checkout">Final Step</a>
             </div>
             @endif
         </div>

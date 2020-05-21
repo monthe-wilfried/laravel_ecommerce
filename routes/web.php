@@ -12,10 +12,14 @@ Route::get('/password-change', 'HomeController@changePassword')->name('password.
 Route::post('/password-update', 'HomeController@updatePassword')->name('password.update');
 Route::get('/user/logout', 'HomeController@Logout')->name('user.logout');
 
-//admin=======
-Route::get('admin/home', 'AdminController@index')->name('admin.home');
 Route::get('admin', 'Admin\LoginController@showLoginForm')->name('admin.login');
 Route::post('admin', 'Admin\LoginController@login');
+
+//admin=======
+
+
+Route::get('admin/home', 'AdminController@index')->name('admin.home');
+
 
 // Password Reset Routes...
 Route::get('admin/password/reset', 'Admin\ForgotPasswordController@showLinkRequestForm')->name('admin.password.request');
@@ -92,6 +96,51 @@ Route::get('admin/blog/post/delete/{id}', 'Admin\PostController@blogPostDelete')
 Route::get('admin/blog/post/edit/{id}', 'Admin\PostController@blogPostEdit')->name('admin.blog.post.edit');
 Route::put('admin/blog/post/update/{id}', 'Admin\PostController@blogPostUpdate')->name('admin.blog.post.update');
 
+// Admin - New Orders
+Route::get('admin/pending/order', 'Admin\Order\OrderController@newOrder')->name('admin.new.order');
+Route::get('admin/view/order/{id}', 'Admin\Order\OrderController@viewOrder')->name('admin.view.order');
+
+Route::get('admin/payment/accept/{id}', 'Admin\Order\OrderController@paymentAccept')->name('admin.payment.accept');
+Route::get('admin/payment/cancel/{id}', 'Admin\Order\OrderController@paymentCancel')->name('admin.payment.cancel');
+
+Route::get('admin/accept/payment', 'Admin\Order\OrderController@acceptPaymentView')->name('admin.accept.payment');
+Route::get('admin/cancel/order', 'Admin\Order\OrderController@cancelOrder')->name('admin.cancel.order');
+Route::get('admin/process/order', 'Admin\Order\OrderController@processOrder')->name('admin.process.order');
+Route::get('admin/success/delivery', 'Admin\Order\OrderController@successDelivery')->name('admin.success.delivery');
+
+Route::get('admin/delivery/process/{id}', 'Admin\Order\OrderController@deliveryProcess')->name('admin.delivery.process');
+Route::get('admin/delivery/success/{id}', 'Admin\Order\OrderController@deliverySuccess')->name('admin.delivery.success');
+
+// Admin SEO
+Route::get('admin/seo', 'Admin\SeoController@seo')->name('admin.seo');
+Route::post('admin/seo/update', 'Admin\SeoController@seoUpdate')->name('update.seo');
+
+
+// Order Report
+//Route::get('admin/today/order', 'Admin\ReportController@todayOrder')->name('today.order');
+//Route::get('admin/today/delivery', 'Admin\ReportController@todayDelivery')->name('today.delivery');
+Route::get('admin/search/report', 'Admin\ReportController@searchReport')->name('search.report');
+
+Route::post('admin/search/by/year', 'Admin\ReportController@searchByYear')->name('search.by.year');
+Route::post('admin/search/by/month', 'Admin\ReportController@searchByMonth')->name('search.by.month');
+Route::post('admin/search/by/date', 'Admin\ReportController@searchByDate')->name('search.by.date');
+
+// Admin Role
+Route::get('admin/all/user', 'Admin\UserRoleController@userRole')->name('admin.all.user');
+Route::get('admin/create', 'Admin\UserRoleController@createAdmin')->name('admin.create');
+Route::post('admin/store', 'Admin\UserRoleController@storeAdmin')->name('admin.store');
+Route::get('admin/edit/{id}', 'Admin\UserRoleController@editAdmin')->name('admin.edit');
+Route::post('admin/update/{id}', 'Admin\UserRoleController@updateAdmin')->name('admin.update');
+Route::get('admin/delete/{id}', 'Admin\UserRoleController@deleteAdmin')->name('admin.delete');
+
+// Admin Site Setting
+Route::get('admin/site/setting', 'Admin\SettingController@siteSetting')->name('admin.site.setting');
+Route::post('admin/update/site/setting', 'Admin\SettingController@updateSetting')->name('update.site.setting');
+
+// Admin Return Request
+Route::get('admin/return/request', 'Admin\ReturnController@returnRequest')->name('admin.return.request');
+Route::get('admin/approve/return/{id}', 'Admin\ReturnController@approveReturn')->name('admin.approve.return');
+Route::get('admin/all/request', 'Admin\ReturnController@allRequests')->name('admin.all.request');
 
 
 
@@ -121,7 +170,7 @@ Route::get('user/remove/coupon', 'CartController@removeCoupon')->name('coupon.re
 
 
 // Frontend - Product single page details
-Route::get('product/details/{id}/{product_name}', 'ProductController@productVew');
+Route::get('product/details/{id}/{product_name}', 'ProductController@productView');
 Route::post('cart/product/add/{id}', 'ProductController@addCart');
 
 // User Checkout
@@ -134,6 +183,27 @@ Route::get('blog/post/{id}/{blog_title}', 'BlogController@singleBlog');
 
 Route::get('language/english', 'BlogController@english')->name('language.english');
 Route::get('language/german', 'BlogController@german')->name('language.german');
+
+
+// Payment Step
+Route::get('payment/page', 'CartController@paymentPage')->name('payment.step');
+Route::post('user/payment/process', 'PaymentController@payment')->name('payment.process');
+Route::post('user/stripe/charge', 'PaymentController@stripeCharge')->name('stripe.charge');
+
+
+// Product details page
+Route::get('products/{sub_category_id}', 'ProductController@productsView');
+Route::get('products/categories/{category_id}', 'ProductController@categoriesView');
+
+// View Orders
+Route::get('user/order/view/{id}', 'HomeController@viewOrder')->name('order.view');
+
+// Order Tracking
+Route::post('order/tracking', 'FrontController@orderTracking')->name('order.tracking')->middleware('auth');
+
+// Return Order
+Route::get('success/list', 'PaymentController@successList')->name('success.orderlist');
+Route::get('return/request/{id}', 'PaymentController@returnRequest')->name('return.request');
 
 
 

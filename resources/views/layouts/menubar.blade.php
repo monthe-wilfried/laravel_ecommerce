@@ -24,10 +24,10 @@
                         <ul class="cat_menu">
                             @foreach($categories as $category)
                                 <li class="hassubs">
-                                    <a href="#">{{ $category->name }}<i class="fas fa-chevron-right"></i></a>
+                                    <a href="{{ url('products/categories/'.$category->id) }}">{{ $category->name }}<i class="fas fa-chevron-right"></i></a>
                                     <ul>
                                         @foreach($category->sub_categories as $sub_category)
-                                            <li><a href="#">{{ $sub_category->name }}</a></li>
+                                            <li><a href="{{ url('products/'.$sub_category->id) }}">{{ $sub_category->name }}</a></li>
                                         @endforeach
                                     </ul>
                                 </li>

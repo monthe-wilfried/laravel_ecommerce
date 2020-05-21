@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Product;
 use App\Wishlist;
 use Illuminate\Http\Request;
@@ -42,7 +43,8 @@ class WishlistController extends Controller
                         ->select('products.*', 'wishlists.user_id')
                         ->where('wishlists.user_id', $user_id)
                         ->get();
-            return view('pages.wishlist', compact('products'));
+            $categories = Category::all();
+            return view('pages.wishlist', compact('products', 'categories'));
         }
         else{
             $notification=array(

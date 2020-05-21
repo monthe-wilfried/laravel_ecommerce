@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Country;
 use App\Coupon;
 use App\Product;
 use App\Setting;
@@ -59,7 +61,8 @@ class CartController extends Controller
     // Show cart content
     public function showCart(){
         $cart = Cart::content();
-        return view('pages.cart', compact('cart'));
+        $categories = Category::all();
+        return view('pages.cart', compact('cart', 'categories'));
     }
 
     // Remove individual cart items
@@ -205,6 +208,24 @@ class CartController extends Controller
             'alert-type'=>'success'
         );
         return Redirect()->back()->with($notification);
+    }
+
+    // Payment page
+    public function paymentPage(){
+        if (Auth::check()){
+            $cart = Cart::content();
+            $setting = Setting::all();
+            $categories = Category::all();
+            $countries = Country::all();
+            return view('pages.payment', compact('cart', 'setting', 'categories', 'countries'));
+        }
+        else{
+            $notification=array(
+                'message'=>'Login first to your account and make some purchases!',
+                'alert-type'=>'error'
+            );
+            return Redirect()->back()->with($notification);
+        }
     }
 
     // Remove all products from the cart
