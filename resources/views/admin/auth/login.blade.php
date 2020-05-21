@@ -31,9 +31,15 @@
             </div><!-- form-group -->
 
             <button type="submit" class="btn btn-info btn-block">Sign In</button>
+
         </form>
+            <br>
+            <div class="card-body text-center">
+                <span class="card-title" style="color: grey; font-size: 11px; ">Developed by <a href="https://github.com/monthe-wilfried">Monthe Wilfried</a></span>
+            </div>
 
         </div><!-- login-wrapper -->
+
     </div><!-- d-flex -->
 
 

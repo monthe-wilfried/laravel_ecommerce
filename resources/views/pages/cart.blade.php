@@ -162,6 +162,7 @@
                                                         <div class="cart_item_title">Quantity</div>
                                                         <form action="{{ route('update.cart.quantity') }}" method="post" style="margin-top: 30px;">
                                                             @csrf
+                                                            <input type="hidden" name="id" value="{{ $row->id }}">
                                                             <input type="hidden" name="product_id" value="{{ $row->rowId }}">
                                                             <input type="number" name="qty" value="{{ $row->qty }}" pattern="[0-9]" style="width: 50px;">
                                                             <button type="submit" title="Update Quantity" class="btn btn-sm btn-success"><i class="fas fa-check-square fa-xs"></i></button>

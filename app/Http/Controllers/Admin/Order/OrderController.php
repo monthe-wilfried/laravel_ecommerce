@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Order;
 
 use App\Http\Controllers\Controller;
 use App\Order;
+use App\OrderDetail;
+use App\Product;
 use App\Shipping;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -101,6 +103,14 @@ class OrderController extends Controller
 
     // Delivery Done
     public function deliverySuccess($id){
+
+        $products = OrderDetail::where('order_id', $id)->get();
+        foreach ($products as $row){
+//            Product::whereId($row->product_id)->update(['product_quantity'=> DB::raw('product_quantity - '.$row->quantity)]);
+            $product = Product::findOrFail($row->product_id);
+            $product->update(['product_quantity'=> $product->product_quantity - $row->quantity]);
+        }
+
         $order = Order::findOrFail($id);
         $order->update(['status' => 3]);
         $notification=array(

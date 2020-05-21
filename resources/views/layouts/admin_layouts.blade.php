@@ -230,6 +230,20 @@
                 </ul>
                 @endif
 
+                @if(Auth::user()->stock == 1)
+                    <a href="#" class="sl-menu-link">
+                        <div class="sl-menu-item">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span class="menu-item-label">Stock Management</span>
+                            <i class="menu-item-arrow fa fa-angle-down"></i>
+                        </div><!-- menu-item -->
+                    </a><!-- sl-menu-link -->
+                    <ul class="sl-menu-sub nav flex-column">
+                        <li class="nav-item"><a href="{{ route('admin.product.stock') }}" class="nav-link">Product Stock</a></li>
+
+                    </ul>
+                @endif
+
                 @if(Auth::user()->review == 1)
                 <a href="#" class="sl-menu-link">
                     <div class="sl-menu-item">
@@ -457,7 +471,9 @@
 
     @yield('admin_content')
 
-
+    <div class="card-body text-center">
+        <span class="card-title" style="color: grey; font-size: 11px; ">Developed by <a href="https://github.com/monthe-wilfried">Monthe Wilfried</a></span>
+    </div>
 
     <script src="{{ asset('public/backend/lib/jquery/jquery.js') }}"></script>
     <script src="{{ asset('public/backend/lib/popper.js/popper.js') }}"></script>

@@ -35,6 +35,7 @@ class Admin extends Authenticatable
             'contact',
             'review',
             'setting',
+            'stock',
             'type',
         ];
 

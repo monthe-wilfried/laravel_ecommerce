@@ -80,6 +80,10 @@
                                         <span class="badge badge-danger">Setting</span>
                                     @endif
 
+                                        @if($user->stock == 1)
+                                            <span class="badge badge-info">Stock</span>
+                                        @endif
+
 
                                 </td>
                                 <td>

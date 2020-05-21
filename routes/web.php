@@ -142,6 +142,11 @@ Route::get('admin/return/request', 'Admin\ReturnController@returnRequest')->name
 Route::get('admin/approve/return/{id}', 'Admin\ReturnController@approveReturn')->name('admin.approve.return');
 Route::get('admin/all/request', 'Admin\ReturnController@allRequests')->name('admin.all.request');
 
+// Admin Product Stock
+Route::get('admin/product/stock', 'Admin\UserRoleController@productStock')->name('admin.product.stock');
+
+
+
 
 
 // Frontend - Newsletter

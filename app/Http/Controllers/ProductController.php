@@ -27,38 +27,51 @@ class ProductController extends Controller
         $data = array();
 
         if (Auth::check()){
-            if ($product->discount_price == Null){
-                $data['id'] = $product->id;
-                $data['name'] = $product->product_name;
-                $data['qty'] = $request->qty;
-                $data['price'] = $product->selling_price;
-                $data['weight'] = 1;
-                $data['options']['color'] = $request->color;
-                $data['options']['size'] = $request->size;
-                $data['options']['image'] = $product->image_one;
-                Cart::add($data);
+            // Checks if the requested number of products by the user is greater than what we have in stock
+            if ($request->qty > $product->product_quantity){
                 $notification=array(
-                    'message'=>'Added to your cart.',
-                    'alert-type'=>'success'
+                    'message'=>'Only '.$product->product_quantity.' products left in Stock',
+                    'alert-type'=>'error'
                 );
                 return Redirect()->back()->with($notification);
             }
             else{
-                $data['id'] = $product->id;
-                $data['name'] = $product->product_name;
-                $data['qty'] = $request->qty;
-                $data['price'] = $product->discount_price;
-                $data['weight'] = 1;
-                $data['options']['color'] = $request->color;
-                $data['options']['size'] = $request->size;
-                $data['options']['image'] = $product->image_one;
-                Cart::add($data);
-                $notification=array(
-                    'message'=>'Added to your cart.',
-                    'alert-type'=>'success'
-                );
-                return Redirect()->back()->with($notification);
+
+                if ($product->discount_price == Null){
+                    $data['id'] = $product->id;
+                    $data['name'] = $product->product_name;
+                    $data['qty'] = $request->qty;
+                    $data['price'] = $product->selling_price;
+                    $data['weight'] = 1;
+                    $data['options']['color'] = $request->color;
+                    $data['options']['size'] = $request->size;
+                    $data['options']['image'] = $product->image_one;
+                    Cart::add($data);
+                    $notification=array(
+                        'message'=>'Added to your cart.',
+                        'alert-type'=>'success'
+                    );
+                    return Redirect()->back()->with($notification);
+                }
+                else{
+                    $data['id'] = $product->id;
+                    $data['name'] = $product->product_name;
+                    $data['qty'] = $request->qty;
+                    $data['price'] = $product->discount_price;
+                    $data['weight'] = 1;
+                    $data['options']['color'] = $request->color;
+                    $data['options']['size'] = $request->size;
+                    $data['options']['image'] = $product->image_one;
+                    Cart::add($data);
+                    $notification=array(
+                        'message'=>'Added to your cart.',
+                        'alert-type'=>'success'
+                    );
+                    return Redirect()->back()->with($notification);
+                }
+
             }
+
         }
         else{
             $notification=array(

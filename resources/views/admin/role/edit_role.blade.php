@@ -214,6 +214,17 @@
                                 </label>
                             </div><!-- col-4 -->
 
+                            <div class="col-lg-4">
+                                <label class="ckbox">
+                                    <input type="checkbox" name="stock" value="1"
+                                           @if($user->stock == 1)
+                                           checked
+                                        @endif
+                                    >
+                                    <span>Stock</span>
+                                </label>
+                            </div><!-- col-4 -->
+
 
 
                         </div><!-- end row -->

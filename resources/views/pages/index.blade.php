@@ -189,9 +189,15 @@
 {{--                                                        <button class="product_cart_button addcart" data-id="{{ $feature->id }}">Add to Cart</button>--}}
 {{--                                                    </div>--}}
                                                     <div class="product_extras">
-                                                        <button id="{{ $feature->id }}" class="product_cart_button addcart" data-toggle="modal" data-target="#cartmodal" onclick="productview(this.id)">
-                                                            Add to Cart
-                                                        </button>
+                                                        @if($feature->product_quantity == 0)
+                                                            <button class="product_cart_button" style="background-color: grey;">
+                                                                Out of Stock
+                                                            </button>
+                                                        @else
+                                                            <button id="{{ $feature->id }}" class="product_cart_button addcart" data-toggle="modal" data-target="#cartmodal" onclick="productview(this.id)">
+                                                                Add to Cart
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
 

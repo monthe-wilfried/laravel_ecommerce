@@ -185,7 +185,14 @@
                                     </div>
 
                                     <div class="button_container">
-                                        <button type="submit" class="button cart_button">Add to Cart</button>
+                                        @if($product->product_quantity == 0)
+                                            <button type="button" class="button cart_button" style="background-color: grey;">
+                                                Out of Stock
+                                            </button>
+                                        @else
+                                            <button type="submit" class="button cart_button">Add to Cart</button>
+                                        @endif
+
 {{--                                        <div class="product_fav" style="color: red"><i class="fas fa-heart"></i></div>--}}
                                         <br><br>
                                         <!-- Go to www.addthis.com/dashboard to customize your tools -->

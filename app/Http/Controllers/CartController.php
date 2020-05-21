@@ -78,12 +78,26 @@ class CartController extends Controller
     public function updateQuantity(Request $request){
         $rowId = $request->product_id;
         $qty = $request->qty;
-        Cart::update($rowId, $qty);
-        $notification=array(
-            'message'=>'Product Quantity Updated',
-            'alert-type'=>'success'
-        );
-        return Redirect()->back()->with($notification);
+
+        $product = Product::findOrFail($request->id);
+        // Checks if the requested number of products by the user is greater than what we have in stock
+        if ($qty > $product->product_quantity){
+            $notification=array(
+                'message'=>'Only '.$product->product_quantity.' products left in Stock',
+                'alert-type'=>'error'
+            );
+            return Redirect()->back()->with($notification);
+        }
+        else{
+            Cart::update($rowId, $qty);
+            $notification=array(
+                'message'=>'Product Quantity Updated',
+                'alert-type'=>'success'
+            );
+            return Redirect()->back()->with($notification);
+        }
+
+
     }
 
     // Product quick view in the modal

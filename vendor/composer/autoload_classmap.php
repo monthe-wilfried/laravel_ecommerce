@@ -26,6 +26,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\ProductController' => $baseDir . '/app/Http/Controllers/Admin/ProductController.php',
     'App\\Http\\Controllers\\Admin\\ReportController' => $baseDir . '/app/Http/Controllers/Admin/ReportController.php',
     'App\\Http\\Controllers\\Admin\\ResetPasswordController' => $baseDir . '/app/Http/Controllers/Admin/ResetPasswordController.php',
+    'App\\Http\\Controllers\\Admin\\ReturnController' => $baseDir . '/app/Http/Controllers/Admin/ReturnController.php',
     'App\\Http\\Controllers\\Admin\\SeoController' => $baseDir . '/app/Http/Controllers/Admin/SeoController.php',
     'App\\Http\\Controllers\\Admin\\SettingController' => $baseDir . '/app/Http/Controllers/Admin/SettingController.php',
     'App\\Http\\Controllers\\Admin\\UserRoleController' => $baseDir . '/app/Http/Controllers/Admin/UserRoleController.php',

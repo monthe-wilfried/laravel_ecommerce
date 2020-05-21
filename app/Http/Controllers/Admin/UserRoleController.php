@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin;
 use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -75,6 +76,7 @@ class UserRoleController extends Controller
         $input['contact'] = $request->contact;
         $input['review'] = $request->review;
         $input['setting'] = $request->setting;
+        $input['stock'] = $request->stock;
 
 
         if ($request->password && strlen($request->password)>=6){
@@ -113,6 +115,13 @@ class UserRoleController extends Controller
             'alert-type'=>'success'
         );
         return Redirect()->route('admin.all.user')->with($notification);
+    }
+
+
+    // Product Stock
+    public function productStock(){
+        $products = Product::all();
+        return view('admin.stock.stock', compact('products'));
     }
 
 
