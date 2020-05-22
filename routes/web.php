@@ -145,6 +145,9 @@ Route::get('admin/all/request', 'Admin\ReturnController@allRequests')->name('adm
 // Admin Product Stock
 Route::get('admin/product/stock', 'Admin\UserRoleController@productStock')->name('admin.product.stock');
 
+// Admin Messages messages
+Route::get('admin/all/messages', 'ContactController@allMessages')->name('admin.all.messages')->middleware('auth:admin');
+Route::get('admin/message/delete/{id}', 'ContactController@deleteMessage')->name('admin.message.delete')->middleware('auth:admin');
 
 
 
@@ -211,7 +214,13 @@ Route::get('success/list', 'PaymentController@successList')->name('success.order
 Route::get('return/request/{id}', 'PaymentController@returnRequest')->name('return.request');
 
 
+// Contact Page
+Route::get('contact/page', 'ContactController@contactPage')->name('contact.page');
+Route::post('contact/form', 'ContactController@contactForm')->name('contact.form');
 
+
+// Product Search
+Route::post('product/search', 'ContactController@search')->name('product.search');
 
 
 

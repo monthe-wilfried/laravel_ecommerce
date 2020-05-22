@@ -2,11 +2,8 @@
 
 @section('content')
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_single_styles.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_single_responsive.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_styles.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/blog_responsive.css') }}">
-    <!-- Main Navigation -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/contact_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/contact_responsive.css') }}">
 
     <nav class="main_nav">
         <div class="container">
@@ -24,31 +21,16 @@
                             </div>
 
                             <ul class="cat_menu">
-                                <li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
-                                <li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
-                                <li class="hassubs">
-                                    <a href="#">Hardware<i class="fas fa-chevron-right"></i></a>
-                                    <ul>
-                                        <li class="hassubs">
-                                            <a href="#">Menu Item<i class="fas fa-chevron-right"></i></a>
-                                            <ul>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                                <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                        <li><a href="#">Menu Item<i class="fas fa-chevron-right"></i></a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Smartphones & Tablets<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">TV & Audio<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Gadgets<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
-                                <li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+                                @foreach($categories as $category)
+                                    <li class="hassubs">
+                                        <a href="{{ url('products/categories/'.$category->id) }}">{{ $category->name }}<i class="fas fa-chevron-right"></i></a>
+                                        <ul>
+                                            @foreach($category->sub_categories as $sub_category)
+                                                <li><a href="{{ url('products/'.$sub_category->id) }}">{{ $sub_category->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
 
@@ -123,61 +105,87 @@
         </div>
     </nav>
 
+    <!-- Contact Info -->
 
-    <!-- Home -->
-
-    <div class="home">
-        <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('public/frontend/images/blog_single_background.jpg') }}" data-speed="0.8"></div>
-    </div>
-    <br><br><br><br>
-
-    <!-- Single Blog Post -->
-
-        <div class="single_post">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 offset-lg-2">
-                        @if(session()->get('lang') == 'english')
-                            <div class="single_post_title">{{ $singlePost->title_en }}</div>
-                            <div class="single_post_text"><p>{!! $singlePost->details_en !!}</p></div>
-                        @else
-                            <div class="single_post_title">{{ $singlePost->title_de }}</div>
-                            <div class="single_post_text"><p>{!! $singlePost->details_de !!}</p></div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    <!-- Blog Posts -->
-
-    <div class="blog">
+    <div class="contact_info">
         <div class="container">
             <div class="row">
-                <div class="col">
-                    <div class="blog_posts d-flex flex-row align-items-start justify-content-between">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="contact_info_container d-flex flex-lg-row flex-column justify-content-between align-items-between">
 
-                        <!-- Blog post -->
-                        @foreach($posts as $post)
-                            <div class="blog_post">
-                                <div class="blog_image" style="background-image:url({{ asset($post->image) }})"></div>
-                                @if(session()->get('lang') == 'german')
-                                    <div class="blog_text"><strong>{{ $post->title_de }}</strong></div>
-                                    <div class="blog_button"><a href="{{ url('blog/post/'.$post->id.'/'.str_slug($post->title_de)) }}">Weiter lesen</a></div>
-                                @else
-                                    <div class="blog_text"><strong>{{ $post->title_en }}</strong></div>
-                                    <div class="blog_button"><a href="{{ url('blog/post/'.$post->id.'/'.str_slug($post->title_en)) }}">Continue Reading</a></div>
-                                @endif
+                        <!-- Contact Item -->
+                        <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+                            <div class="contact_info_image"><img src="{{ asset('public/frontend/images/contact_1.png') }}" alt=""></div>
+                            <div class="contact_info_content">
+                                <div class="contact_info_title">Phone</div>
+                                <div class="contact_info_text">{{ $site->phone_two }}</div>
                             </div>
-                        @endforeach
+                        </div>
+
+                        <!-- Contact Item -->
+                        <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+                            <div class="contact_info_image"><img src="{{ asset('public/frontend/images/contact_2.png') }}" alt=""></div>
+                            <div class="contact_info_content">
+                                <div class="contact_info_title">Email</div>
+                                <div class="contact_info_text">{{ $site->email }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Item -->
+                        <div class="contact_info_item d-flex flex-row align-items-center justify-content-start">
+                            <div class="contact_info_image"><img src="{{ asset('public/frontend/images/contact_3.png') }}" alt=""></div>
+                            <div class="contact_info_content">
+                                <div class="contact_info_title">Address</div>
+                                <div class="contact_info_text">{{ $site->company_address }}</div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Contact Form -->
 
+    <div class="contact_form">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="contact_form_container">
+                        <div class="contact_form_title">Get in Touch</div>
 
+                        <form action="{{ route('contact.form') }}" id="contact_form" method="post">
+                            @csrf
+                            <div class="contact_form_inputs d-flex flex-md-row flex-column justify-content-between align-items-between">
+                                <input type="text" name="name" id="contact_form_name" class="contact_form_name input_field" placeholder="Your name" required="required" data-error="Name is required.">
+                                <input type="text" name="email" id="contact_form_email" class="contact_form_email input_field" placeholder="Your email" required="required" data-error="Email is required.">
+                                <input type="text" name="phone" id="contact_form_phone" class="contact_form_phone input_field" placeholder="Your phone number">
+                            </div>
+                            <div class="contact_form_text">
+                                <textarea id="contact_form_message" class="text_field contact_form_message" name="message" rows="4" placeholder="Message" required="required" data-error="Please, write us a message."></textarea>
+                            </div>
+                            <div class="contact_form_button">
+                                <button type="submit" class="button contact_submit_button">Send Message</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel"></div>
+    </div>
+
+    <!-- Map -->
+
+    <div class="contact_map">
+        <div id="google_map" class="google_map">
+            <div class="map_container">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Newsletter -->
 
@@ -209,7 +217,6 @@
             </div>
         </div>
     </div>
-
 
 
 @endsection

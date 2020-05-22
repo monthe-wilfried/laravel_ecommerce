@@ -122,8 +122,9 @@
                         <div class="header_search">
                             <div class="header_search_content">
                                 <div class="header_search_form_container">
-                                    <form action="#" class="header_search_form clearfix">
-                                        <input type="search" required="required" class="header_search_input" placeholder="Search for products...">
+                                    <form action="{{ route('product.search') }}" method="post" class="header_search_form clearfix">
+                                        @csrf
+                                        <input type="search" name="search" required="required" class="header_search_input" placeholder="Search for products...">
                                         <div class="custom_dropdown">
                                             <div class="custom_dropdown_list">
                                                 @php
@@ -328,9 +329,10 @@
 <script src="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
 <script src="{{ asset('public/frontend/plugins/slick-1.8.0/slick.js') }}"></script>
 <script src="{{ asset('public/frontend/plugins/easing/easing.js') }}"></script>
+<script src="{{ asset('public/frontend/js/custom.js') }}"></script>
+
 <script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
 <script src="{{ asset('public/frontend/js/cart_custom.js') }}"></script>
-<script src="{{ asset('public/frontend/js/custom.js') }}"></script>
 <script src="{{ asset('public/frontend/js/blog_custom.js') }}"></script>
 <script src="{{ asset('public/frontend/js/blog_single_custom.js') }}"></script>
 
@@ -340,13 +342,17 @@
 <script src="{{ asset('public/frontend/plugins/parallax-js-master/parallax.min.js') }}"></script>
 <script src="{{ asset('public/frontend/js/shop_custom.js') }}"></script>
 
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCIwF204lFZg1y4kPSIhKaHEXMLYxxuMhA"></script>
+<script src="{{ asset('public/frontend/js/contact_custom.js') }}"></script>
+
+
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 
-@yield('styles')
+
 
 <script>
         @if(Session::has('message'))

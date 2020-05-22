@@ -2,6 +2,13 @@
 
 @section('content')
 
+    @php
+
+        $categories = \App\Category::all();
+        $brands = \App\Brand::all();
+
+    @endphp
+
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/shop_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/shop_responsive.css') }}">
@@ -115,7 +122,7 @@
         <div class="home_background parallax-window" data-parallax="scroll" data-image-src="{{ asset('public/frontend/images/shop_background.jpg') }}"></div>
         <div class="home_overlay"></div>
         <div class="home_content d-flex flex-column align-items-center justify-content-center">
-            <h2 class="home_title">{{ $sub_name }}</h2>
+            <h2 class="home_title">Search Result</h2>
         </div>
     </div>
 
@@ -150,10 +157,7 @@
                         <div class="sidebar_section">
                             <div class="sidebar_subtitle brands_subtitle">Brands</div>
                             <ul class="brands_list">
-                                @foreach($brands_id as $row)
-                                    @php
-                                        $brand = \App\Brand::where('id', $row->brand_id)->first();
-                                    @endphp
+                                @foreach($brands as $brand)
                                     <li class="brand"><a href="#">{{ $brand->name }}</a></li>
                                 @endforeach
                             </ul>
@@ -187,8 +191,8 @@
                         <div class="product_grid">
                             <div class="product_grid_border"></div>
 
-                            @foreach($products as $product)
-                                <!-- Product Item -->
+                        @foreach($products as $product)
+                            <!-- Product Item -->
                                 <div class="product_item is_new">
                                     <div class="product_border"></div>
                                     <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="{{ asset($product->image_one) }}" style="height: 100px; width: 100px;"></div>
