@@ -356,12 +356,15 @@
                                                         </div>
                                                         <div class="product_name"><div><a href="product.html">{{ $womanProduct->product_name }}</a></div></div>
                                                         <div class="product_extras">
-                                                            <div class="product_color">
-                                                                <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                                <input type="radio" name="product_color" style="background:#000000">
-                                                                <input type="radio" name="product_color" style="background:#999999">
-                                                            </div>
-                                                            <button class="product_cart_button">Add to Cart</button>
+                                                            @if($womanProduct->product_quantity == 0)
+                                                                <button class="product_cart_button" style="background-color: grey;">
+                                                                    Out of Stock
+                                                                </button>
+                                                            @else
+                                                                <button id="{{ $womanProduct->id }}" class="product_cart_button addcart" data-toggle="modal" data-target="#cartmodal" onclick="productview(this.id)">
+                                                                    Add to Cart
+                                                                </button>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -438,12 +441,15 @@
                                                         </div>
                                                         <div class="product_name"><div><a href="product.html">{{ $watchProduct->product_name }}</a></div></div>
                                                         <div class="product_extras">
-                                                            <div class="product_color">
-                                                                <input type="radio" checked name="product_color" style="background:#b19c83">
-                                                                <input type="radio" name="product_color" style="background:#000000">
-                                                                <input type="radio" name="product_color" style="background:#999999">
-                                                            </div>
-                                                            <button class="product_cart_button">Add to Cart</button>
+                                                            @if($watchProduct->product_quantity == 0)
+                                                                <button class="product_cart_button" style="background-color: grey;">
+                                                                    Out of Stock
+                                                                </button>
+                                                            @else
+                                                                <button id="{{ $watchProduct->id }}" class="product_cart_button addcart" data-toggle="modal" data-target="#cartmodal" onclick="productview(this.id)">
+                                                                    Add to Cart
+                                                                </button>
+                                                            @endif
                                                         </div>
                                                     </div>
 

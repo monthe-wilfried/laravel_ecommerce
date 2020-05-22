@@ -197,6 +197,7 @@ Route::get('language/german', 'BlogController@german')->name('language.german');
 Route::get('payment/page', 'CartController@paymentPage')->name('payment.step');
 Route::post('user/payment/process', 'PaymentController@payment')->name('payment.process');
 Route::post('user/stripe/charge', 'PaymentController@stripeCharge')->name('stripe.charge');
+Route::post('user/oncash/charge', 'PaymentController@oncashCharge')->name('oncash.charge');
 
 
 // Product details page

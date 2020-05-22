@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Country;
+use App\Mail\InvoiceMail;
 use App\Order;
 use App\OrderDetail;
 use App\Shipping;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
@@ -48,8 +50,8 @@ class PaymentController extends Controller
         elseif ($request->payment == 'paypal'){
             return view('pages.payment.paypal', compact('data'));
         }
-        elseif ($request->payment == 'ideal'){
-            return view('pages.payment.ideal', compact('data'));
+        elseif ($request->payment == 'oncash'){
+            return view('pages.payment.oncash', compact('data'));
         }
         else{
             return 'Cash On Delivery';
@@ -60,6 +62,7 @@ class PaymentController extends Controller
 
     public function stripeCharge(Request $request){
 
+        $email = Auth::user()->email;
         $total = $request->total;
         // Set your secret key. Remember to switch to your live secret key in production!
         // See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -101,8 +104,10 @@ class PaymentController extends Controller
         $data['date'] = date('d-m-y');
         $data['month'] = date('F');
         $data['year'] = date('Y');
-
         $order = Order::create($data);
+
+        // Send an invoice mail to the user
+        Mail::to($email)->send(new InvoiceMail($data));
 
 
         // Insert into Shippings table
@@ -163,7 +168,69 @@ class PaymentController extends Controller
 
 
 
+    public function oncashCharge(Request $request){
 
+        // Insert into Orders table
+        $data = array();
+
+        $data['user_id'] = Auth::id();
+        $data['payment_type'] = $request->payment_type;
+        $data['shipping'] = $request->shipping;
+        $data['vat'] = $request->vat;
+        $data['total'] = $request->total;
+        $data['tracking_number'] = mt_rand(100000,999999);  // Generate some random 6 digits code
+
+        if (session()->has('coupon')){
+            $data['subtotal'] = Cart::subtotal() - session()->get('coupon')['discount'];
+        }
+        else{
+            $data['subtotal'] = Cart::subtotal();
+        }
+        $data['status'] = 0;
+        $data['date'] = date('d-m-y');
+        $data['month'] = date('F');
+        $data['year'] = date('Y');
+        $order = Order::create($data);
+
+
+
+        // Insert into Shippings table
+        $shipping = array();
+        $shipping['order_id'] = $order->id;
+        $shipping['shipping_name'] = $request->shipping_name;
+        $shipping['shipping_phone'] = $request->shipping_phone;
+        $shipping['shipping_email'] = $request->shipping_email;
+        $shipping['shipping_address'] = $request->shipping_address;
+        $shipping['shipping_city'] = $request->shipping_city;
+        $shipping['shipping_country'] = $request->shipping_country;
+        Shipping::create($shipping);
+
+        // Insert into order_details table
+        $contents = Cart::content();
+        $details = array();
+        foreach ($contents as $content){
+            $details['order_id'] = $order->id;
+            $details['product_id'] = $content->id;
+            $details['product_name'] = $content->name;
+            $details['color'] = $content->options->color;
+            $details['size'] = $content->options->size;
+            $details['quantity'] = $content->qty;
+            $details['single_price'] = $content->price;
+            $details['total_price'] = $content->qty * $content->price;
+            OrderDetail::create($details);
+        }
+
+        Cart::destroy();
+        if (session()->has('coupon')){
+            session()->forget('coupon');
+        }
+        $notification=array(
+            'message'=>'Thanks, Order successfully processed!',
+            'alert-type'=>'success'
+        );
+        return Redirect()->to('/')->with($notification);
+
+    }
 
 
 

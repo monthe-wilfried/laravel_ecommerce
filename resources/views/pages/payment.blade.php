@@ -294,7 +294,7 @@
                                 <ul class="logos_list">
                                     <li><input type="radio" name="payment" value="stripe"><img src="{{ asset('public/frontend/images/mastercard.png') }}" style="width: 100px; height: 70px;"></li>
                                     <li><input type="radio" name="payment" value="paypal"><img src="{{ asset('public/frontend/images/paypal.png') }}" style="width: 100px; height: 70px;"></li>
-                                    <li><input type="radio" name="payment" value="ideal"><img src="{{ asset('public/frontend/images/mollie.png') }}" style="width: 100px; height: 70px;"></li>
+                                    <li><input type="radio" name="payment" value="oncash"><img src="{{ asset('public/frontend/images/cash-on-delivery.png') }}" style="width: 100px; height: 70px;"></li>
                                 </ul>
                             </div>
 
